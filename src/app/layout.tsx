@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import { isGoogleAuthEnabled } from "@/auth";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import "./globals.css";
 
 /** Body font from the style guide. Self-hosted: Satoshi isn't on Google Fonts. */
@@ -38,7 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        {children}
+        <AuthProvider enabled={isGoogleAuthEnabled}>{children}</AuthProvider>
       </body>
     </html>
   );
