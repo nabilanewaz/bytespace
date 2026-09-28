@@ -1,86 +1,167 @@
 # ByteSpace — Online Course Website
 
-A responsive implementation of the **ByteSpace** online-course website from the Figma design. It covers all 9 screens (landing page, login, register, course details with lessons and reviews, creator profile, search, 404), plus the supporting pages every link points to.
+A responsive, fully interactive build of the **ByteSpace** online-course website from its Figma design, made with Next.js 16, React 19, TypeScript and Tailwind CSS v4.
 
-**Design:** [Online Course Website UI Kit](https://ui8.net/purepearl) by purepearl (UI8). Colors, typography and the 12-column grid follow the kit's style guide.
+**[Live demo → newbytespace.vercel.app](https://newbytespace.vercel.app)**
 
-**Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · lucide-react icons
+![ByteSpace landing page](docs/home.jpg)
+
+| Course details | Search | Mobile |
+| --- | --- | --- |
+| ![Course details page](docs/course.jpg) | ![Search page](docs/search.jpg) | ![Landing page on mobile](docs/home-mobile.jpg) |
+
+## Highlights
+
+- **All 9 Figma screens:** landing page, login, register, the three course-detail tabs (About, Lessons, Reviews), creator profile, search, and 404. The pages that the links point to are built too, so no link is a dead end.
+- **Matches the style guide:** the Neutral, Primary and Secondary palettes, the Poppins and Satoshi type scale, and the 12-column grid are defined once as Tailwind design tokens.
+- **Every clickable element works:**
+  - Search and filters, with the state kept in the URL.
+  - A cart that checks out into **My Courses**.
+  - Course tabs and a review filter by star rating.
+  - Share, cookie preferences, and validated forms.
+- **Real Google sign-in** with Auth.js v5. It's optional, and the site works without it.
+- **Reusable components, with the content kept separate:** the text and course data live in `src/data`, so one `CourseCard` or `CourseGrid` serves the home, search and creator pages.
+- **Responsive and accessible:** layouts from 360px up, a skip link, visible focus rings, labelled controls, and keyboard-friendly menus.
+- **Fast:** 54 pages are prerendered when the site is built, the images are optimised WebP files (about 370 KB in total), and the fonts are self-hosted.
 
 ## Pages
 
-| Route       | Description                                                  |
-| ----------- | ------------------------------------------------------------ |
-| `/`         | Landing page (hero, courses, learning paths, creators, testimonials, footer) |
-| `/courses/[slug]` | Course details — About tab (bonus)                     |
-| `/courses/[slug]/lessons` | Course details — Lessons tab (bonus)           |
-| `/courses/[slug]/reviews` | Course details — Reviews tab with rating filter (bonus) |
-| `/creators/[slug]` | Creator profile with filterable, sortable courses (bonus) |
-| `/search`   | Course and creator search with filters, sorting and pagination (bonus) |
+| Route | What it shows |
+| --- | --- |
+| `/` | Landing page: hero, partners, featured courses, learning paths, creators, testimonials |
+| `/courses/[slug]` | Course details, About tab |
+| `/courses/[slug]/lessons` | Course details, Lessons tab (modules and lessons) |
+| `/courses/[slug]/reviews` | Course details, Reviews tab with a star-rating filter |
+| `/creators/[slug]` | Creator profile with filterable, sortable courses |
+| `/search` | Course and creator search with filters, sorting and pagination |
+| `/login`, `/register` | Sign-in (with Google) and create-account pages |
 | `/creators` | All creators |
-| `/cart`     | Cart with remove and a demo checkout |
-| `/my-courses` | Courses you've checked out (saved in the browser) |
+| `/cart` | Cart with a demo checkout |
+| `/my-courses` | Courses you've checked out |
 | `/about`, `/help`, `/contact`, `/affiliate` | Footer pages: about, FAQ, contact form, affiliate program |
 | `/privacy`, `/terms`, `/cookies` | Policies and working cookie preferences |
-| `/login`    | Sign-in page (bonus)                                         |
-| `/register` | Create-account page (bonus)                                  |
-| any other   | Custom 404 page (bonus)                                      |
+| any other URL | Custom 404 page |
+
+`[slug]` is a [dynamic route](https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes): one template renders every course or creator. `generateStaticParams` prerenders all of them when the site is built.
+
+## Tech stack
+
+| Area | Choice |
+| --- | --- |
+| Framework | [Next.js 16](https://nextjs.org) (App Router, static generation) |
+| UI | React 19, TypeScript (strict) |
+| Styling | Tailwind CSS v4 with design tokens set in `@theme` |
+| Icons | [lucide-react](https://lucide.dev) |
+| Auth | [Auth.js v5](https://authjs.dev) (Google provider, cookie session) |
+| Hosting | Vercel |
 
 ## Getting started
 
+You need **Node.js 20.9 or newer**.
+
 ```bash
+git clone https://github.com/nabilanewaz/bytespace.git
+cd bytespace
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
-npm run lint
+npm run dev        # http://localhost:3000
 ```
 
-## Google sign-in (optional)
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm start` | Serve the production build |
+| `npm run lint` | Run ESLint |
 
-"Continue with Google" on `/login` uses [Auth.js v5](https://authjs.dev) with a cookie-based session, so no database is needed. After signing in, the navbar shows the user's photo and name with a Sign out button, and you return to the page you came from.
+### Google sign-in (optional)
 
-It turns on when these variables are set (see `.env.example`):
+Without any configuration, everything works and the Google button shows a demo message. To turn on real sign-in, copy `.env.example` to `.env.local` and fill in these values:
 
 | Variable | Where it comes from |
 | --- | --- |
-| `AUTH_SECRET` | `npx auth secret` (random string) |
-| `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google Cloud Console → Credentials → OAuth client ID (Web application) |
+| `AUTH_SECRET` | `npx auth secret` (a random string) |
+| `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | Google Cloud Console → Credentials → OAuth client ID (Web application) |
 
-Add `https://<your-domain>/api/auth/callback/google` (and `http://localhost:3000/api/auth/callback/google` for local development) as an authorized redirect URI. Without the variables, the site works as before and the Google button shows a demo message.
+Add `http://localhost:3000/api/auth/callback/google` (plus your deployed domain's equivalent) as an authorized redirect URI. On Vercel, set the same variables under **Settings → Environment Variables**, then redeploy.
+
+Once signed in, the navbar shows your photo and name with a Sign out button, and you're sent back to the page you came from, including your search filters.
 
 ## Project structure
 
 ```
 src/
-├── app/                    # Routes: page.tsx, login/, register/, not-found.tsx, layout.tsx
+├── app/                 # Routes: one folder per page, plus layout, 404 and the auth API route
 ├── components/
-│   ├── ui/                 # Primitives: Button, Container, Logo, Shape, DecorFrame, AvatarStack, SectionHeading
-│   ├── cards/              # CourseCard, TestimonialCard, floating stat cards
-│   ├── layout/             # Navbar (with mobile menu), Footer, NewsletterForm
-│   ├── sections/           # One component per landing-page section
-│   ├── course/             # Course hero, sidebar, tabs, modules, ratings, reviews
-│   ├── creator/            # Creator hero, follow stats, filterable course grid
-│   ├── courses/            # Shared course toolbar (filters + sort) and results grid
-│   ├── search/             # Search page and creator results
-│   └── auth/               # AuthLayout, AuthForm, TextField, SocialLogin
-├── data/                   # Page content (courses, categories, nav links, testimonials)
-└── lib/                    # Small helpers
+│   ├── ui/              # Primitives: Button, Container, Logo, Shape, StarRating, Pagination…
+│   ├── cards/           # CourseCard, TestimonialCard, floating stat cards
+│   ├── layout/          # Navbar, UserMenu, Footer, PageHeader, CartLink
+│   ├── sections/        # One component per landing-page section
+│   ├── course/          # Course hero, sidebar, tabs, modules, ratings, reviews
+│   ├── creator/         # Creator hero, follow stats, course list
+│   ├── courses/         # Shared course toolbar (filters and sort) and results grid
+│   ├── search/          # Search page and creator results
+│   ├── auth/            # Auth layout, forms, social login, session provider
+│   └── cart/, enrollments/, contact/, cookies/
+├── data/                # Content: courses, creators, course details, navigation, testimonials
+├── lib/                 # Helpers: filtering, cart and enrollment stores, auth actions
+└── auth.ts              # Auth.js configuration
+public/images/           # Optimised WebP images taken from the Figma file
 ```
 
-## Notes for reviewers
+## Implementation notes
 
-- **Reusable components.** The same `CourseCard`, `HappyStudentsCard`, and `Shape` components are used on both the landing page and the auth pages. Content lives in `src/data/`, so sections contain layout only.
-- **Design tokens from the style guide.** The full Neutral, Primary (Electric Violet) and Secondary (lime) palettes, 50–950, and the type scale (`text-heading-l/m/s/xs`, `text-body-l/m/s/xs`, `text-label-*`) are defined once in `globals.css` (`@theme`). Components use semantic aliases on top: `bg-brand` = primary-800, `bg-lime` = secondary-400, `text-muted` = neutral-500, and so on. Content sits in a 1200px container (a 1440px frame with 120px margins), and card grids use the guide's 40px gutter.
-- **Faithful assets.** Images were extracted from the Figma export and converted to optimized WebP (~370 KB total). The 3D doodles are rendered as a CSS mask plus a flat brand color, matching how Figma tints them, so a single asset serves both the lime and white variants.
-- **Pixel positioning.** Decorative shapes use `DecorFrame`, which places them at their exact Figma coordinates on a centered 1440px layer. The overlapping hero and feature collages keep the Figma proportions and scale down as one unit on smaller screens.
-- **Responsive.** Mobile-first layouts from 360px up to desktop, with a collapsible mobile nav.
-- **Interactivity.** The category chips filter the course grid, "More" reveals extra categories, and the search, newsletter, and auth forms validate input. There is no backend, so the forms only show a confirmation.
-- **Accessibility.** Semantic landmarks, labelled inputs, ARIA for tabs, menu, and progress bar, and visible focus styles.
-- **Fonts.** Headings use Poppins SemiBold (Google Fonts). Body text uses **Satoshi**, as the style guide specifies. It isn't on Google Fonts, so it's self-hosted from Fontshare (free licence) via `next/font/local`, with no third-party requests at runtime.
-- **Course pages.** Each tab is its own URL (`/courses/[slug]/lessons`, …) sharing one layout, and every course is prerendered with `generateStaticParams`. Course cards on the landing page link to them. The design only has copy for "Build Digital Asset", so the other courses use generic copy built from their title.
-- **Consistent data.** Each course has one rating breakdown in `src/data/courses.ts`. The card, the course header ("4.7 (889 reviews)") and the Reviews tab all derive from it, and lesson counts come from the same record. In the design these disagreed: 4.5 vs 4.8, 172 vs 889 reviews, 17 vs 112 lessons. Sample reviews cover every star rating, so each filter shows results. Modules are numbered 1–6 (the design skips 3).
-- **Home-page filtering.** The learning-path cards filter the home course grid through a shared client-side context (`CourseFilterContext`), so the page stays statically prerendered. The hero search opens `/search?q=…`.
-- **Search page.** The page filters as you type and keeps the query, category and scope in the URL, so results can be shared and survive a reload (e.g. `/search?q=data&category=Data%20Science`). It shares its filter logic (`src/lib/courseFilters.ts`) and toolbar with the creator profile. The design shows five pages of repeated cards, so six catalog-only courses were added (reusing the design's photos, as the mock-up does) to make search and pagination meaningful. The home page's Featured tab is unchanged. The category chips default to **All**, since the design's default of "Featured" would hide most of the catalog.
-- **Creator profile.** Courses reference their creator by id, so the product count, course grid, course sidebar, and "by …" links all come from one source. The filters are native `<select>` elements styled as pills, which keeps them keyboard- and screen-reader-friendly. The design's placeholder text ("[Creator's Name]", "ive into …") and its "3 Products" count, which contradicts the 6 courses shown, are replaced with real values.
-- **Everything clickable works.** An automated crawl of every page checks that no link is a placeholder and every destination loads. Enroll Now adds to a cart (saved in the browser, with a live badge in the navbar) that has a demo checkout. The footer links lead to real pages, and footer categories open the matching search. Social sign-in, the video play button and all forms give clear feedback, since there is no backend.
-- **Accessibility.** There's a skip-to-content link, a visible focus ring on every control, labelled icon buttons, and Escape closes the mobile menu.
-- **Design quirk.** The footer newsletter button reads "Search" in the Figma file. It is labelled "Subscribe" here to match its purpose.
+**Design fidelity**
+- **Design tokens.** The style guide's palettes (50–950) and type scale (`text-heading-l/m/s/xs`, `text-body-*`, `text-label-*`) live once in `globals.css`. Components use semantic aliases on top: `bg-brand`, `bg-lime`, `text-muted`, and so on.
+- **Grid.** Content sits in a 1200px container, which is the 1440px frame with 120px margins. Card grids use the guide's 40px gutter.
+- **Decorative shapes.** The 3D doodles are drawn with a CSS mask plus a flat colour, the same way Figma tints them, so one image serves both the lime and white versions. `DecorFrame` places them at their exact Figma coordinates.
+- **Overlapping collages.** These keep Figma's proportions and scale down as one unit on smaller screens.
+- **Fonts.** Headings use Poppins. Body text uses **Satoshi**, self-hosted from Fontshare with `next/font/local`, so there are no third-party font requests.
+
+**Architecture**
+- **Static by default.** Course and creator pages are prerendered. Interactive parts are small client components inside server-rendered pages.
+- **One source of truth.** Each course has one rating breakdown and one creator id, and the card, course header, Reviews tab and creator profile all derive from it.
+- **Shared filtering.** Search and the creator profile share the same filter logic (`lib/courseFilters.ts`) and toolbar. Search keeps the query, category and scope in the URL, so results can be shared and survive a reload.
+- **Browser storage.** The cart, My Courses and cookie preferences are kept in localStorage, through a small store built on `useSyncExternalStore`. It stays in sync across tabs and avoids mismatches when the page first loads.
+- **Safe sign-in redirects.** The return address after sign-in is parsed and only accepted if it's a path on the same site, which prevents open redirects.
+
+**Accessibility**
+- Semantic landmarks, a skip-to-content link and labelled icon buttons.
+- ARIA for the tabs, the mobile menu and the progress bar.
+- Escape closes the mobile menu, and every control has a visible focus ring.
+- Filters are native `<select>` elements styled as pills, so they work with a keyboard and a screen reader.
+
+### Where the build differs from the design, and why
+
+| In the design | In this build |
+| --- | --- |
+| Ratings and counts disagree between screens (4.5 vs 4.8, 172 vs 889 reviews, 17 vs 112 lessons) | Each value is derived from one record, so every screen agrees |
+| Placeholder copy ("[Creator's Name]", "ive into …") and "3 Products" beside 6 courses | Real names, real text and correct counts |
+| Course modules numbered 1, 2, 4, … | Numbered 1–6 |
+| The newsletter button reads "Search" | Labelled "Subscribe", to match what it does |
+| Search defaults to the "Featured" category | Defaults to **All**, so the whole catalogue is visible |
+| Only one course has written copy | The other courses get generated copy based on their titles |
+
+## Quality checks
+
+Before each merge, the project was checked with:
+- `npm run lint` and `tsc --noEmit` (strict TypeScript).
+- A clean production build (54 prerendered pages).
+- A headless-Chrome run over every page that:
+  - follows every link and confirms it loads, with no placeholder `#` links;
+  - checks for horizontal overflow at 360, 768 and 1024px;
+  - clicks through the cart, checkout, My Courses, forms, search, cookie settings and sign-in flows, and confirms there are no console errors.
+
+## Limitations
+
+This is a front-end assessment, so there's no backend or database:
+- The email/password forms validate input and show a confirmation, but don't create accounts. Google sign-in is real.
+- The cart, enrollments and preferences are saved in the current browser only.
+- Checkout is a demo, and no payment is taken.
+
+## Credits
+
+- **Design:** [Online Course Website UI Kit](https://ui8.net/purepearl) by purepearl (UI8)
+- **Fonts:** [Poppins](https://fonts.google.com/specimen/Poppins) (Google Fonts) and [Satoshi](https://www.fontshare.com/fonts/satoshi) (Fontshare, free licence)
+- **Icons:** [Lucide](https://lucide.dev)
+
+Built by [Nabila Newaz](https://github.com/nabilanewaz) for the Doin Tech Limited Jr. Software Engineer (Frontend) assessment.
