@@ -9,6 +9,9 @@ A responsive implementation of the **ByteSpace** online-course landing page, bui
 | Route       | Description                                                  |
 | ----------- | ------------------------------------------------------------ |
 | `/`         | Landing page (hero, courses, learning paths, creators, testimonials, footer) |
+| `/courses/[slug]` | Course details — About tab (bonus)                     |
+| `/courses/[slug]/lessons` | Course details — Lessons tab (bonus)           |
+| `/courses/[slug]/reviews` | Course details — Reviews tab with rating filter (bonus) |
 | `/login`    | Sign-in page (bonus)                                         |
 | `/register` | Create-account page (bonus)                                  |
 | any other   | Custom 404 page (bonus)                                      |
@@ -32,6 +35,7 @@ src/
 │   ├── cards/              # CourseCard, TestimonialCard, floating stat cards
 │   ├── layout/             # Navbar (with mobile menu), Footer, NewsletterForm
 │   ├── sections/           # One component per landing-page section
+│   ├── course/             # Course hero, sidebar, tabs, modules, ratings, reviews
 │   └── auth/               # AuthLayout, AuthForm, TextField, SocialLogin
 ├── data/                   # Page content (courses, categories, nav links, testimonials)
 └── lib/                    # Small helpers
@@ -47,4 +51,6 @@ src/
 - **Interactivity.** The category chips filter the course grid, "More" reveals extra categories, and the search, newsletter, and auth forms validate input. There is no backend, so the forms only show a confirmation.
 - **Accessibility.** Semantic landmarks, labelled inputs, ARIA for tabs, menu, and progress bar, and visible focus styles.
 - **Fonts.** Headings use Poppins, as in the design. The design's body font isn't on Google Fonts, so **Outfit** stands in as the closest match.
+- **Course pages.** Each tab is its own URL (`/courses/[slug]/lessons`, …) sharing one layout, and every course is prerendered with `generateStaticParams`. Course cards on the landing page link to them. The design only has copy for "Build Digital Asset", so the other courses use generic copy built from their title.
+- **Consistent data.** The design shows "4.8 (172 reviews)" in the hero but a breakdown adding up to 889 reviews averaging 4.7. Both numbers are now derived from the breakdown. Modules are numbered 1–6 (the design skips 3).
 - **Design quirk.** The footer newsletter button reads "Search" in the Figma file. It is labelled "Subscribe" here to match its purpose.
