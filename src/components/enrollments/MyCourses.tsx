@@ -2,13 +2,18 @@
 
 import { CourseGrid } from "@/components/courses/CourseGrid";
 import { ButtonLink } from "@/components/ui/Button";
+import { LoadingBlock } from "@/components/ui/LoadingBlock";
 import { courses } from "@/data/courses";
 import { useEnrollments } from "@/lib/enrollments";
+import { useHydrated } from "@/lib/localStore";
 
 /** The visitor's enrolled courses, most recent first. */
 export function MyCourses() {
   const ids = useEnrollments();
+  const hydrated = useHydrated();
   const enrolled = ids.flatMap((id) => courses.find((c) => c.id === id) ?? []).reverse();
+
+  if (!hydrated) return <LoadingBlock label="Loading your courses" />;
 
   if (enrolled.length === 0) {
     return (
