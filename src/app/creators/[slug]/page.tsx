@@ -4,7 +4,8 @@ import { CreatorCourses } from "@/components/creator/CreatorCourses";
 import { CreatorHero } from "@/components/creator/CreatorHero";
 import { Footer } from "@/components/layout/Footer";
 import { Container } from "@/components/ui/Container";
-import { creators, getCreator, getCreatorCourses } from "@/data/creators";
+import { getCreatorCourses } from "@/data/courses";
+import { creators, getCreator } from "@/data/creators";
 
 export const dynamicParams = false;
 

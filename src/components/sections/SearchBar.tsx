@@ -7,7 +7,10 @@ import { cn } from "@/lib/cn";
 
 /** Hero search: filters the course grid by title, creator, level or category. */
 export function SearchBar({ className }: { className?: string }) {
-  const { showCourses } = useCourseFilter();
+  const { filter, showCourses } = useCourseFilter();
+  // Remounting the input on filter changes keeps it in sync: it shows the
+  // active query, and empties when the grid switches to a category or path.
+  const activeQuery = filter.kind === "search" ? filter.query : "";
 
   return (
     <form
@@ -23,6 +26,8 @@ export function SearchBar({ className }: { className?: string }) {
         <Search className="size-5 shrink-0 text-subtle" aria-hidden="true" />
         <span className="sr-only">Search courses</span>
         <input
+          key={activeQuery}
+          defaultValue={activeQuery}
           type="search"
           name="q"
           placeholder="Course, topic, creator"

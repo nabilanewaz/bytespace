@@ -74,7 +74,15 @@ export function Navbar() {
           <ul className="flex flex-col gap-4 text-lg text-ink">
             {mainNav.map((link) => (
               <li key={link.label}>
-                <Link href={link.href} onClick={close} className="block hover:text-brand">
+                <Link
+                  href={link.href}
+                  onClick={close}
+                  aria-current={isCurrent(link, pathname) ? "page" : undefined}
+                  className={cn(
+                    "block hover:text-brand",
+                    isCurrent(link, pathname) && "font-medium text-brand",
+                  )}
+                >
                   {link.label}
                 </Link>
               </li>

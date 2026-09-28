@@ -1,5 +1,3 @@
-import { courses } from "@/data/courses";
-
 export type Creator = {
   id: string;
   name: string;
@@ -28,8 +26,4 @@ export const creators: Creator[] = [
 
 export function getCreator(id: string) {
   return creators.find((c) => c.id === id);
-}
-
-export function getCreatorCourses(id: string) {
-  return courses.filter((c) => c.creatorId === id);
 }

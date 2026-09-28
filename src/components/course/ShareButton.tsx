@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Share2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -34,8 +34,12 @@ async function copyText(text: string) {
 /** Uses the native share sheet when available, otherwise copies the page link. */
 export function ShareButton({ title, className }: { title: string; className?: string }) {
   const [status, setStatus] = useState<Status>("idle");
+  const resetTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   async function share() {
+    // Clear any message left over from a previous attempt.
+    clearTimeout(resetTimer.current);
+    setStatus("idle");
     const url = window.location.href;
     if (navigator.share) {
       try {
@@ -47,7 +51,7 @@ export function ShareButton({ title, className }: { title: string; className?: s
       }
     }
     setStatus((await copyText(url)) ? "copied" : "failed");
-    setTimeout(() => setStatus("idle"), 2000);
+    resetTimer.current = setTimeout(() => setStatus("idle"), 2000);
   }
 
   return (

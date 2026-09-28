@@ -1,12 +1,15 @@
+import { getCreator } from "@/data/creators";
+
 /** Review counts for 5, 4, 3, 2 and 1 stars, in that order. */
 export type RatingBreakdown = [number, number, number, number, number];
 
 export type Course = {
   id: string;
   title: string;
-  creator: string;
   /** Slug of the creator's profile page. */
   creatorId: string;
+  /** Display name, looked up from the creator record. */
+  creator: string;
   image: string;
   ratingBreakdown: RatingBreakdown;
   /** Average of `ratingBreakdown`, rounded to one decimal. */
@@ -23,7 +26,7 @@ export type Course = {
   categories: string[];
 };
 
-type CourseInput = Omit<Course, "rating" | "reviewCount">;
+type CourseInput = Omit<Course, "creator" | "rating" | "reviewCount">;
 
 const enrolledAvatars = [
   "/images/avatars/student-2.webp",
@@ -33,7 +36,6 @@ const enrolledAvatars = [
 ];
 
 const base = {
-  creator: "purepearl studio",
   creatorId: "purepearl-studio",
   lessons: 17,
   duration: "2 hours 16 mins",
@@ -43,12 +45,19 @@ const base = {
   enrolledExtra: 26,
 } satisfies Partial<CourseInput>;
 
-function withRating(course: CourseInput): Course {
+/** Fills in the fields derived from other data: creator name and rating totals. */
+function resolve(course: CourseInput): Course {
+  const creator = getCreator(course.creatorId);
+  if (!creator) throw new Error(`Course "${course.id}" has unknown creator "${course.creatorId}"`);
   const counts = course.ratingBreakdown;
   const reviewCount = counts.reduce((sum, n) => sum + n, 0);
   const weighted = counts.reduce((sum, n, i) => sum + n * (5 - i), 0);
   const rating = reviewCount ? Math.round((weighted / reviewCount) * 10) / 10 : 0;
-  return { ...course, rating, reviewCount };
+  return { ...course, creator: creator.name, rating, reviewCount };
+}
+
+export function getCreatorCourses(creatorId: string) {
+  return courses.filter((c) => c.creatorId === creatorId);
 }
 
 export const courses: Course[] = (
@@ -113,7 +122,7 @@ export const courses: Course[] = (
       ],
     },
   ] satisfies CourseInput[]
-).map(withRating);
+).map(resolve);
 
 export const courseCategories = [
   "Featured",
