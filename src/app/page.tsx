@@ -11,7 +11,7 @@ import { Testimonials } from "@/components/sections/Testimonials";
 export default function HomePage() {
   return (
     <>
-      <main id="main">
+      <main>
         <CourseFilterProvider>
           <Hero />
           <PartnerLogos />

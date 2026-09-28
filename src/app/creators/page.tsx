@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function CreatorsPage() {
   return (
     <>
-      <main id="main">
+      <main>
         <PageHeader
           title="Meet Our Creators"
           description="Learn from passionate professionals who share their expertise on ByteSpace."

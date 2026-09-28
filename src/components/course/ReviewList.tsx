@@ -77,7 +77,7 @@ function ReviewCard({ review }: { review: Review }) {
         <p className="shrink-0 text-base text-muted">{review.postedAgo}</p>
       </header>
       <StarRating rating={review.rating} className="mt-6" />
-      <p className="mt-6 text-base leading-[1.7] text-muted">{review.body}</p>
+      <p className="mt-6 text-body-m text-muted">{review.body}</p>
     </article>
   );
 }

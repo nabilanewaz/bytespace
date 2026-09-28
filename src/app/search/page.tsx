@@ -15,14 +15,20 @@ function first(value: string | string[] | undefined) {
 export default async function SearchPage({ searchParams }: PageProps<"/search">) {
   const params = await searchParams;
   const scope: SearchScope = first(params.scope) === "creators" ? "creators" : "courses";
+  const query = first(params.q);
+  const category = first(params.category);
 
   return (
     <>
-      <main id="main">
+      <main>
+        {/* The key restarts the search when a link opens a different one (e.g. a
+            footer category) while this page is already open. Typing only
+            rewrites the URL in place, which doesn't reach this server component. */}
         <SearchExperience
-          initialQuery={first(params.q)}
+          key={`${scope}|${query}|${category}`}
+          initialQuery={query}
           initialScope={scope}
-          initialCategory={first(params.category)}
+          initialCategory={category}
         />
       </main>
       <Footer />

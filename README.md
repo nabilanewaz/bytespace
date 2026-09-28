@@ -1,6 +1,8 @@
-# ByteSpace — Landing Page
+# ByteSpace — Online Course Website
 
-A responsive implementation of the **ByteSpace** online-course landing page, built from the Figma design, plus the bonus **Login**, **Register**, and **404** pages.
+A responsive implementation of the **ByteSpace** online-course website from the Figma design. It covers all 9 screens (landing page, login, register, course details with lessons and reviews, creator profile, search, 404), plus the supporting pages every link points to.
+
+**Design:** [Online Course Website UI Kit](https://ui8.net/purepearl) by purepearl (UI8). Colors, typography and the 12-column grid follow the kit's style guide.
 
 **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · lucide-react icons
 
@@ -53,13 +55,13 @@ src/
 ## Notes for reviewers
 
 - **Reusable components.** The same `CourseCard`, `HappyStudentsCard`, and `Shape` components are used on both the landing page and the auth pages. Content lives in `src/data/`, so sections contain layout only.
-- **Design tokens.** Brand colors, fonts, and shadows are defined once in `globals.css` (`@theme`) and used as Tailwind utilities (`bg-brand`, `bg-lime`, `text-muted`, …).
+- **Design tokens from the style guide.** The full Neutral, Primary (Electric Violet) and Secondary (lime) palettes, 50–950, and the type scale (`text-heading-l/m/s/xs`, `text-body-l/m/s/xs`, `text-label-*`) are defined once in `globals.css` (`@theme`). Components use semantic aliases on top: `bg-brand` = primary-800, `bg-lime` = secondary-400, `text-muted` = neutral-500, and so on. Content sits in a 1200px container (a 1440px frame with 120px margins), and card grids use the guide's 40px gutter.
 - **Faithful assets.** Images were extracted from the Figma export and converted to optimized WebP (~370 KB total). The 3D doodles are rendered as a CSS mask plus a flat brand color, matching how Figma tints them, so a single asset serves both the lime and white variants.
 - **Pixel positioning.** Decorative shapes use `DecorFrame`, which places them at their exact Figma coordinates on a centered 1440px layer. The overlapping hero and feature collages keep the Figma proportions and scale down as one unit on smaller screens.
 - **Responsive.** Mobile-first layouts from 360px up to desktop, with a collapsible mobile nav.
 - **Interactivity.** The category chips filter the course grid, "More" reveals extra categories, and the search, newsletter, and auth forms validate input. There is no backend, so the forms only show a confirmation.
 - **Accessibility.** Semantic landmarks, labelled inputs, ARIA for tabs, menu, and progress bar, and visible focus styles.
-- **Fonts.** Headings use Poppins, as in the design. The design's body font isn't on Google Fonts, so **Outfit** stands in as the closest match.
+- **Fonts.** Headings use Poppins SemiBold (Google Fonts). Body text uses **Satoshi**, as the style guide specifies. It isn't on Google Fonts, so it's self-hosted from Fontshare (free licence) via `next/font/local`, with no third-party requests at runtime.
 - **Course pages.** Each tab is its own URL (`/courses/[slug]/lessons`, …) sharing one layout, and every course is prerendered with `generateStaticParams`. Course cards on the landing page link to them. The design only has copy for "Build Digital Asset", so the other courses use generic copy built from their title.
 - **Consistent data.** Each course has one rating breakdown in `src/data/courses.ts`. The card, the course header ("4.7 (889 reviews)") and the Reviews tab all derive from it, and lesson counts come from the same record. In the design these disagreed: 4.5 vs 4.8, 172 vs 889 reviews, 17 vs 112 lessons. Sample reviews cover every star rating, so each filter shows results. Modules are numbered 1–6 (the design skips 3).
 - **Home-page filtering.** The learning-path cards filter the home course grid through a shared client-side context (`CourseFilterContext`), so the page stays statically prerendered. The hero search opens `/search?q=…`.

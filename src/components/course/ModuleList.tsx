@@ -11,7 +11,7 @@ export function ModuleList({ modules }: { modules: Module[] }) {
           </span>
           <div>
             <h3 className="text-base text-ink sm:text-lg">{module.title}</h3>
-            <p className="mt-1 text-base leading-[1.7] text-muted">{module.summary}</p>
+            <p className="mt-1 text-body-m text-muted">{module.summary}</p>
           </div>
         </li>
       ))}

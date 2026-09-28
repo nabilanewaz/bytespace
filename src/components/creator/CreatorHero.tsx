@@ -20,16 +20,16 @@ export function CreatorHero({ creator, courseCount }: { creator: Creator; course
           />
           <div>
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="font-display text-3xl font-semibold text-white sm:text-[40px]">
+              <h1 className="font-display text-3xl font-semibold text-white sm:text-heading-m">
                 {creator.name}
               </h1>
               <span className="rounded-full bg-lime px-6 py-1 text-lg text-ink">Creator</span>
             </div>
-            <p className="mt-2 text-lg font-light text-white">{creator.tagline}</p>
+            <p className="mt-2 text-body-l text-white">{creator.tagline}</p>
           </div>
         </div>
 
-        <div className="mt-10 text-base leading-[1.6] font-light text-white sm:text-lg lg:mt-[46px]">
+        <div className="mt-10 text-body-m text-white sm:text-body-l lg:mt-[46px]">
           {creator.bio.map((paragraph) => (
             <p key={paragraph.slice(0, 32)}>{paragraph}</p>
           ))}

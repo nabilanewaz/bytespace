@@ -12,9 +12,9 @@ export function PageHeader({ title, description }: PageHeaderProps) {
     <section className="bg-grid overflow-hidden">
       <Navbar />
       <Container className="pt-6 pb-16 text-center lg:pt-[42px] lg:pb-[80px]">
-        <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-[44px]">{title}</h1>
+        <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-heading-m">{title}</h1>
         {description && (
-          <p className="mx-auto mt-4 max-w-[640px] text-base font-light text-white sm:text-lg">{description}</p>
+          <p className="mx-auto mt-4 max-w-[640px] text-body-m text-white sm:text-body-l">{description}</p>
         )}
       </Container>
     </section>

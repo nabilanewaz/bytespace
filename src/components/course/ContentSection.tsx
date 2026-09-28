@@ -18,7 +18,7 @@ export function ContentSection({ title, children, className }: ContentSectionPro
 
 export function Prose({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("flex flex-col gap-6 text-base leading-[1.7] text-muted", className)}>
+    <div className={cn("flex flex-col gap-6 text-body-m text-muted", className)}>
       {children}
     </div>
   );
