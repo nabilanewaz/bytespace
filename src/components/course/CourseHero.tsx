@@ -10,8 +10,8 @@ import { cn } from "@/lib/cn";
 
 export function CourseHero({ detail }: { detail: CourseDetail }) {
   const stats = [
-    { Icon: ChartNoAxesColumn, label: detail.level },
-    { Icon: Star, label: `${detail.rating} (${detail.reviewCount} reviews)`, filled: true },
+    { Icon: ChartNoAxesColumn, label: detail.course.level },
+    { Icon: Star, label: `${detail.course.rating} (${detail.course.reviewCount} reviews)`, filled: true },
     { Icon: Users, label: `${detail.students} Students` },
   ];
 
@@ -29,7 +29,7 @@ export function CourseHero({ detail }: { detail: CourseDetail }) {
             </p>
             <p className="mt-6 text-lg text-white lg:mt-8">
               by{" "}
-              <Link href="#creator" className="text-lime hover:underline">
+              <Link href={`/creators/${detail.creator.id}`} className="text-lime hover:underline">
                 {detail.course.creator}
               </Link>
             </p>
@@ -57,7 +57,7 @@ export function CourseHero({ detail }: { detail: CourseDetail }) {
           <div className="relative h-[220px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-[479px]">
             <Image
               src="/images/course/video-poster.webp"
-              alt={`Preview video for ${detail.headline}`}
+              alt={`Preview image for ${detail.headline}`}
               fill
               priority
               sizes="(min-width: 1280px) 725px, (min-width: 1024px) 60vw, 100vw"

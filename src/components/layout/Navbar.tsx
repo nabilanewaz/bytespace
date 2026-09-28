@@ -2,13 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, ShoppingBag, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
-import { mainNav } from "@/data/site";
+import { mainNav, type NavLink } from "@/data/site";
 import { cn } from "@/lib/cn";
 
+/** Home only matches "/" itself; other links match their whole section (e.g. /courses/…). */
+function isCurrent(link: NavLink, pathname: string) {
+  if (!link.section) return false;
+  return link.section === "/" ? pathname === "/" : pathname.startsWith(link.section);
+}
+
 export function Navbar() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
@@ -19,12 +27,12 @@ export function Navbar() {
 
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-6 text-base text-surface">
-            {mainNav.map((link, i) => (
+            {mainNav.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className={cn("transition hover:text-lime", i === 0 && "font-medium")}
-                  aria-current={i === 0 ? "page" : undefined}
+                  className={cn("transition hover:text-lime", isCurrent(link, pathname) && "font-medium")}
+                  aria-current={isCurrent(link, pathname) ? "page" : undefined}
                 >
                   {link.label}
                 </Link>

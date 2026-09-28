@@ -13,8 +13,8 @@ export default async function CourseReviewsPage({ params }: PageProps<"/courses/
           <p>{detail.reviewsIntro}</p>
         </Prose>
         <RatingSummary
-          average={detail.rating}
-          breakdown={detail.ratingBreakdown}
+          average={detail.course.rating}
+          breakdown={detail.course.ratingBreakdown}
           className="mt-6"
         />
       </ContentSection>

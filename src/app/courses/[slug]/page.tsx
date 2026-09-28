@@ -16,7 +16,7 @@ export default async function CourseAboutPage({ params }: PageProps<"/courses/[s
         </Prose>
       </ContentSection>
 
-      <ContentSection title="Sneak Peak">
+      <ContentSection title="Sneak Peek">
         <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-[19px]">
           {detail.sneakPeek.map((src, i) => (
             <li key={src} className="relative aspect-[167/125] overflow-hidden rounded-2xl">

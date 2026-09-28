@@ -66,7 +66,17 @@ export function CourseCard({ course, starTone = "muted", href, className }: Cour
         </p>
       </div>
       <p className="text-xs text-muted">
-        by <span className="text-brand">{course.creator}</span>
+        by{" "}
+        {href ? (
+          <Link
+            href={`/creators/${course.creatorId}`}
+            className="relative z-10 text-brand hover:underline"
+          >
+            {course.creator}
+          </Link>
+        ) : (
+          <span className="text-brand">{course.creator}</span>
+        )}
       </p>
 
       <div className="mt-4 flex items-center gap-3">

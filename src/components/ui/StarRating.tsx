@@ -4,12 +4,14 @@ import { cn } from "@/lib/cn";
 type StarRatingProps = {
   rating: number;
   max?: number;
+  size?: "sm" | "md";
   className?: string;
-  starClassName?: string;
 };
 
+const sizes = { sm: "size-5", md: "size-6" };
+
 /** Row of filled/empty stars; announced to screen readers as "N out of 5 stars". */
-export function StarRating({ rating, max = 5, className, starClassName }: StarRatingProps) {
+export function StarRating({ rating, max = 5, size = "md", className }: StarRatingProps) {
   return (
     <div role="img" aria-label={`${rating} out of ${max} stars`} className={cn("flex gap-1", className)}>
       {Array.from({ length: max }, (_, i) => (
@@ -17,9 +19,9 @@ export function StarRating({ rating, max = 5, className, starClassName }: StarRa
           key={i}
           aria-hidden="true"
           className={cn(
-            "size-6 fill-current",
+            "fill-current",
+            sizes[size],
             i < Math.round(rating) ? "text-ink-soft" : "text-line",
-            starClassName,
           )}
         />
       ))}
