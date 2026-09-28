@@ -2,6 +2,17 @@
 
 import { useSyncExternalStore } from "react";
 
+const noSubscribe = () => () => {};
+
+/**
+ * False in the prerendered HTML and during hydration, true afterwards. Lets a page show a
+ * loading state instead of the store's fallback (e.g. "Your cart is empty") before
+ * localStorage has been read.
+ */
+export function useHydrated() {
+  return useSyncExternalStore(noSubscribe, () => true, () => false);
+}
+
 /**
  * A value persisted in localStorage that components can subscribe to.
  * Every subscriber (and other open tabs) re-renders when it changes, and

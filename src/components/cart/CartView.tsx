@@ -5,12 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { CircleCheck, Trash2 } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
+import { LoadingBlock } from "@/components/ui/LoadingBlock";
 import { courses } from "@/data/courses";
 import { cart, useCart } from "@/lib/cart";
 import { enrollments } from "@/lib/enrollments";
+import { useHydrated } from "@/lib/localStore";
 
 export function CartView() {
   const ids = useCart();
+  const hydrated = useHydrated();
   const [enrolledTitles, setEnrolledTitles] = useState<string[] | null>(null);
   const items = ids.flatMap((id) => courses.find((c) => c.id === id) ?? []);
   const total = items.reduce((sum, c) => sum + c.price, 0);
@@ -39,6 +42,8 @@ export function CartView() {
       </div>
     );
   }
+
+  if (!hydrated) return <LoadingBlock label="Loading your cart" />;
 
   if (items.length === 0) {
     return (
