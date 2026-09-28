@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getCreatorCourses } from "@/data/courses";
+import { courses } from "@/data/courses";
 import type { Creator } from "@/data/creators";
+
+/** Number of courses per creator, counted once for the whole catalog. */
+const courseCounts = courses.reduce(
+  (counts, c) => counts.set(c.creatorId, (counts.get(c.creatorId) ?? 0) + 1),
+  new Map<string, number>(),
+);
 
 type CreatorResultsProps = { creators: Creator[]; query: string };
 
@@ -24,7 +30,7 @@ export function CreatorResults({ creators, query }: CreatorResultsProps) {
   return (
     <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite">
       {matches.map((creator) => {
-        const courseCount = getCreatorCourses(creator.id).length;
+        const courseCount = courseCounts.get(creator.id) ?? 0;
         return (
           <li key={creator.id}>
             <Link

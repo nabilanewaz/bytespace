@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CourseGrid } from "@/components/courses/CourseGrid";
 import { CourseToolbar } from "@/components/courses/CourseToolbar";
 import type { Course } from "@/data/courses";
@@ -14,13 +14,14 @@ import {
 /** Creator's course grid with rating/level/category filters and sorting. */
 export function CreatorCourses({ courses }: { courses: Course[] }) {
   const [filters, setFilters] = useState<CourseFilters>(DEFAULT_FILTERS);
+  const categories = useMemo(() => categoryOptions(courses), [courses]);
   const visible = applyCourseFilters(courses, filters);
 
   return (
     <section aria-label="Courses">
       <CourseToolbar
         filters={filters}
-        categoryOptions={categoryOptions(courses)}
+        categoryOptions={categories}
         onChange={(patch) => setFilters((f) => ({ ...f, ...patch }))}
       />
 

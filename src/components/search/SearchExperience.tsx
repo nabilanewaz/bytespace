@@ -49,7 +49,9 @@ export function SearchExperience({ initialQuery, initialScope, initialCategory }
     if (scope !== "courses") params.set("scope", scope);
     if (filters.category !== ALL) params.set("category", filters.category);
     const qs = params.toString();
-    window.history.replaceState(null, "", qs ? `/search?${qs}` : "/search");
+    // Keep the current path so a basePath or locale prefix is preserved.
+    const { pathname } = window.location;
+    window.history.replaceState(null, "", qs ? `${pathname}?${qs}` : pathname);
   }, [filters.query, filters.category, scope]);
 
   const updateFilters = (patch: Partial<CourseFilters>) => {

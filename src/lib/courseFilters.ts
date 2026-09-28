@@ -6,6 +6,12 @@ export const ALL = "all";
 
 const levelOrder = ["Beginner", "Intermediate", "Advanced"] as const;
 
+/** Sort rank for a level; anything unrecognised sorts last. */
+function levelRank(level: string) {
+  const rank = levelOrder.indexOf(level as (typeof levelOrder)[number]);
+  return rank === -1 ? levelOrder.length : rank;
+}
+
 export type CourseFilters = {
   query: string;
   rating: string;
@@ -63,12 +69,14 @@ export function matchesQuery(course: Course, query: string) {
 }
 
 export function applyCourseFilters(courses: Course[], f: CourseFilters) {
+  // `filter` returns a new array, so sorting it in place doesn't touch `courses`.
+  // (`toSorted` would read better but isn't available in all supported browsers.)
   return courses
     .filter((c) => matchesQuery(c, f.query))
     .filter((c) => f.rating === ALL || c.rating >= Number(f.rating))
     .filter((c) => f.level === ALL || c.level === f.level)
     .filter((c) => f.category === ALL || c.categories.includes(f.category))
-    .toSorted((a, b) => {
+    .sort((a, b) => {
       switch (f.sort) {
         case "rating":
           return b.rating - a.rating;
@@ -79,7 +87,7 @@ export function applyCourseFilters(courses: Course[], f: CourseFilters) {
         case "title":
           return a.title.localeCompare(b.title);
         case "level":
-          return levelOrder.indexOf(a.level) - levelOrder.indexOf(b.level);
+          return levelRank(a.level) - levelRank(b.level);
         default:
           return 0;
       }
