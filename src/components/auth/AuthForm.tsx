@@ -5,14 +5,16 @@ import { Button } from "@/components/ui/Button";
 
 type AuthFormProps = {
   submitLabel: string;
+  /** Shown after a valid submit, since there is no backend yet. */
+  successMessage: string;
   children: React.ReactNode;
 };
 
 /**
- * Wraps the auth fields. There is no backend yet, so a valid submit shows a
- * confirmation message and nothing is sent anywhere.
+ * Wraps the auth fields. There is no backend yet, so a valid submit shows
+ * `successMessage` and nothing is sent anywhere.
  */
-export function AuthForm({ submitLabel, children }: AuthFormProps) {
+export function AuthForm({ submitLabel, successMessage, children }: AuthFormProps) {
   const [submitted, setSubmitted] = useState(false);
 
   return (
@@ -26,7 +28,7 @@ export function AuthForm({ submitLabel, children }: AuthFormProps) {
       {children}
       <div className="flex items-center justify-between gap-4">
         <p role="status" className="text-sm text-brand">
-          {submitted && "Thanks! Accounts are coming soon."}
+          {submitted && successMessage}
         </p>
         <Button type="submit" size="lg">
           {submitLabel}

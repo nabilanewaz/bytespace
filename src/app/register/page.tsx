@@ -19,7 +19,10 @@ export default function RegisterPage() {
         </>
       }
     >
-      <AuthForm submitLabel="Continue">
+      <AuthForm
+        submitLabel="Continue"
+        successMessage="Thanks! Registration opens soon. This is a demo."
+      >
         <TextField
           label="Full Name"
           name="name"

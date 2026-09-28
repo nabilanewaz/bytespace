@@ -32,7 +32,7 @@ export function RatingSummary({ average, breakdown, className }: RatingSummaryPr
               <div className="h-2 flex-1 overflow-hidden rounded-full bg-line">
                 <div className="h-full rounded-full bg-lime" style={{ width: `${percent}%` }} />
               </div>
-              <StarRating rating={stars} starClassName="size-5" className="max-sm:hidden" />
+              <StarRating rating={stars} size="sm" className="max-sm:hidden" />
               <span className="sr-only sm:hidden">{stars} stars:</span>
               <span className="w-10 text-right text-base text-muted">{count}</span>
             </li>

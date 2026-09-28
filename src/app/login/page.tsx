@@ -15,7 +15,10 @@ export default function LoginPage() {
       eyebrow="Sign In"
       title="Welcome Back"
     >
-      <AuthForm submitLabel="Sign In">
+      <AuthForm
+        submitLabel="Sign In"
+        successMessage="Sign-in isn't available yet. This is a demo."
+      >
         <TextField
           label="Email"
           name="email"

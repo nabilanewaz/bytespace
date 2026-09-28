@@ -14,7 +14,8 @@ const includeIcons = {
 const ctaText = "Ready to Dive In? Enroll Now and Start Building Your Digital Future!";
 
 export function CourseSidebar({ detail, className }: { detail: CourseDetail; className?: string }) {
-  const remaining = detail.totalLessons - detail.previewLessons.length;
+  const { lessons, duration } = detail.course;
+  const remaining = lessons - detail.previewLessons.length;
 
   return (
     <aside
@@ -22,7 +23,7 @@ export function CourseSidebar({ detail, className }: { detail: CourseDetail; cla
       className={cn("rounded-3xl border border-line-strong bg-white p-6 sm:p-10", className)}
     >
       <h2 className="font-display text-xl font-semibold text-ink-soft">
-        {detail.totalLessons} Lessons ({detail.totalHours} hours)
+        {lessons} Lessons ({duration})
       </h2>
       <ol className="mt-5 flex flex-col gap-3">
         {detail.previewLessons.map((lesson, i) => (
@@ -46,7 +47,7 @@ export function CourseSidebar({ detail, className }: { detail: CourseDetail; cla
         Enroll Now
       </Button>
 
-      <h3 className="mt-8 font-display text-xl font-semibold text-ink-soft">This course include</h3>
+      <h3 className="mt-8 font-display text-xl font-semibold text-ink-soft">This course includes</h3>
       <ul className="mt-5 flex flex-col gap-4">
         {courseIncludes.map((item) => {
           const Icon = includeIcons[item];
@@ -59,7 +60,7 @@ export function CourseSidebar({ detail, className }: { detail: CourseDetail; cla
         })}
       </ul>
 
-      <div id="creator" className="mt-6 scroll-mt-8 border-t border-line pt-6">
+      <div className="mt-6 border-t border-line pt-6">
         <div className="flex items-center gap-3">
           <Image
             src={detail.creator.avatar}
@@ -74,7 +75,7 @@ export function CourseSidebar({ detail, className }: { detail: CourseDetail; cla
           </div>
         </div>
         <p className="mt-6 text-base leading-relaxed text-muted">{ctaText}</p>
-        <ButtonLink href="#" variant="outline" size="sm" className="mt-5">
+        <ButtonLink href={`/creators/${detail.creator.id}`} variant="outline" size="sm" className="mt-5">
           See Full Profile
         </ButtonLink>
       </div>

@@ -1,4 +1,5 @@
 import { courses, type Course } from "@/data/courses";
+import { getCreator, type Creator } from "@/data/creators";
 
 export type Module = { title: string; summary: string };
 
@@ -12,17 +13,17 @@ export type Review = {
   body: string;
 };
 
+/**
+ * Everything shown on a course page. Stats that also appear on the course card
+ * (level, lessons, duration, rating, review counts) are read from `course`, so
+ * the card and the page never disagree.
+ */
 export type CourseDetail = {
   course: Course;
+  creator: Creator;
   headline: string;
   subtitle: string;
-  level: string;
-  /** Average rating and total review count, derived from `ratingBreakdown`. */
-  rating: number;
-  reviewCount: number;
   students: number;
-  totalLessons: number;
-  totalHours: number;
   previewLessons: { title: string; minutes: number }[];
   description: string[];
   sneakPeek: string[];
@@ -33,11 +34,11 @@ export type CourseDetail = {
   progressText: string;
   progress: number;
   reviewsIntro: string;
-  /** Review counts for 5, 4, 3, 2 and 1 stars, in that order. */
-  ratingBreakdown: [number, number, number, number, number];
+  /** A sample of individual reviews, with at least one per star rating. */
   reviews: Review[];
-  creator: { name: string; role: string; avatar: string };
 };
+
+type DetailContent = Omit<CourseDetail, "course" | "creator">;
 
 export const courseIncludes = [
   "Learning Resources",
@@ -46,64 +47,13 @@ export const courseIncludes = [
   "Private Consultation",
 ] as const;
 
-const creator = {
-  name: "PurePearl Studio",
-  role: "Professional Creator",
-  avatar: "/images/avatars/purepearl.webp",
-};
-
 const sneakPeek = [1, 2, 3, 4].map((n) => `/images/course/sneak-peek-${n}.webp`);
 
-const reviews: Review[] = [
-  {
-    id: "r1",
-    name: "PurePearl Studio",
-    role: "UI/UX Designer",
-    avatar: "/images/avatars/reviewer-1.webp",
-    rating: 5,
-    postedAgo: "a year ago",
-    body: "The course provided me with a comprehensive understanding of digital asset creation. The lessons were in-depth, practical, and immediately applicable to my work. Highly recommended!",
-  },
-  {
-    id: "r2",
-    name: "Albert Flores",
-    role: "UI/UX Designer",
-    avatar: "/images/avatars/reviewer-2.webp",
-    rating: 5,
-    postedAgo: "a year ago",
-    body: "This course transformed my approach to digital design. The combination of theory, hands-on exercises, and real-world applications made it a truly enriching experience. Excited to implement what I've learned!",
-  },
-  {
-    id: "r3",
-    name: "Cody Fisher",
-    role: "UI/UX Designer",
-    avatar: "/images/avatars/reviewer-3.webp",
-    rating: 4,
-    postedAgo: "a year ago",
-    body: "The project showcase and critique module created a collaborative environment where I could showcase my work, receive valuable feedback, and refine my skills. It added a unique and valuable dimension to the learning process.",
-  },
-  {
-    id: "r4",
-    name: "Brooklyn Simmons",
-    role: "UI/UX Designer",
-    avatar: "/images/avatars/reviewer-4.webp",
-    rating: 5,
-    postedAgo: "a year ago",
-    body: "The lessons on optimizing digital assets for various platforms were particularly insightful. The course adapts to the evolving digital landscape, and the engaging content kept me motivated throughout.",
-  },
-];
-
-/** Sections shared by every course page. */
+/** Sections worded generally enough to fit every course. */
 const shared = {
-  level: "Intermediate",
   students: 199,
-  totalLessons: 112,
-  totalHours: 24,
   sneakPeek,
   progress: 55,
-  ratingBreakdown: [720, 120, 21, 12, 16] as CourseDetail["ratingBreakdown"],
-  reviews,
-  creator,
   modulesIntro:
     "Immerse yourself in the course content as we break down each module into comprehensive lessons, providing practical insights and hands-on experiences.",
   lessonContent:
@@ -113,15 +63,13 @@ const shared = {
 };
 
 /** Full copy from the Figma "Course Details" screens. */
-type DetailContent = Omit<CourseDetail, "course" | "rating" | "reviewCount">;
-
 const digitalAsset: DetailContent = {
   ...shared,
   headline: "Build Digital Asset: A Comprehensive Guide",
   subtitle: "Unlock the Power of Digital Creation with Expert Guidance",
   previewLessons: [
     { title: "Introduction to Digital Assets", minutes: 12 },
-    { title: "Design Principles for Impacts", minutes: 21 },
+    { title: "Design Principles for Impact", minutes: 21 },
     { title: "Advanced Techniques in Digital Creation", minutes: 16 },
   ],
   description: [
@@ -173,7 +121,97 @@ const digitalAsset: DetailContent = {
   ],
   reviewsIntro:
     "Discover what our learners have to say about their experience with 'Build Digital Assets: A Comprehensive Guide.' Read reviews and ratings from individuals who have embarked on the transformative journey of mastering digital asset creation.",
+  reviews: [
+    {
+      id: "r1",
+      name: "Jenny Wilson",
+      role: "UI/UX Designer",
+      avatar: "/images/avatars/reviewer-1.webp",
+      rating: 5,
+      postedAgo: "a year ago",
+      body: "The course provided me with a comprehensive understanding of digital asset creation. The lessons were in-depth, practical, and immediately applicable to my work. Highly recommended!",
+    },
+    {
+      id: "r2",
+      name: "Albert Flores",
+      role: "UI/UX Designer",
+      avatar: "/images/avatars/reviewer-2.webp",
+      rating: 5,
+      postedAgo: "a year ago",
+      body: "This course transformed my approach to digital design. The combination of theory, hands-on exercises, and real-world applications made it a truly enriching experience. Excited to implement what I've learned!",
+    },
+    {
+      id: "r3",
+      name: "Cody Fisher",
+      role: "UI/UX Designer",
+      avatar: "/images/avatars/reviewer-3.webp",
+      rating: 4,
+      postedAgo: "a year ago",
+      body: "The project showcase and critique module created a collaborative environment where I could showcase my work, receive valuable feedback, and refine my skills. It added a unique and valuable dimension to the learning process.",
+    },
+    {
+      id: "r4",
+      name: "Brooklyn Simmons",
+      role: "UI/UX Designer",
+      avatar: "/images/avatars/reviewer-4.webp",
+      rating: 5,
+      postedAgo: "a year ago",
+      body: "The lessons on optimizing digital assets for various platforms were particularly insightful. The course adapts to the evolving digital landscape, and the engaging content kept me motivated throughout.",
+    },
+    {
+      id: "r5",
+      name: "Kristin Watson",
+      role: "Graphic Designer",
+      avatar: "/images/avatars/student-5.webp",
+      rating: 3,
+      postedAgo: "10 months ago",
+      body: "Solid fundamentals and nice examples. I already knew most of the first two modules, so the pace felt slow for me, but the later modules made up for it.",
+    },
+    {
+      id: "r6",
+      name: "Darrell Steward",
+      role: "Marketing Specialist",
+      avatar: "/images/avatars/student-6.webp",
+      rating: 2,
+      postedAgo: "8 months ago",
+      body: "Good content, but it assumes you already use professional design tools. I would have liked a short setup lesson for complete beginners.",
+    },
+    {
+      id: "r7",
+      name: "Jacob Jones",
+      role: "Student",
+      avatar: "/images/avatars/student-7.webp",
+      rating: 1,
+      postedAgo: "6 months ago",
+      body: "Not what I was looking for. I expected more on 3D assets, while the course focuses on 2D design and publishing.",
+    },
+  ],
 };
+
+/** Neutral sample reviews for courses without copy in the design. */
+function genericReviews(title: string): Review[] {
+  const reviewers = [
+    { name: "Jenny Wilson", role: "Product Designer", avatar: "/images/avatars/reviewer-1.webp" },
+    { name: "Albert Flores", role: "Team Lead", avatar: "/images/avatars/reviewer-2.webp" },
+    { name: "Cody Fisher", role: "Freelancer", avatar: "/images/avatars/reviewer-3.webp" },
+    { name: "Brooklyn Simmons", role: "Student", avatar: "/images/avatars/reviewer-4.webp" },
+    { name: "Jacob Jones", role: "Analyst", avatar: "/images/avatars/student-7.webp" },
+  ];
+  const bodies = [
+    `"${title}" was exactly what I needed. Clear explanations, practical exercises, and a great final project.`,
+    "Well structured and easy to follow. A few lessons could go deeper, but overall I learned a lot.",
+    "Useful content, though the pace was uneven. The practical sections were the most valuable part for me.",
+    "Some good ideas, but I expected more advanced material for the price.",
+    "The course didn't match my level. It would help to have clearer prerequisites on the course page.",
+  ];
+  return reviewers.map((r, i) => ({
+    id: `g${i + 1}`,
+    ...r,
+    rating: 5 - i,
+    postedAgo: `${i + 2} months ago`,
+    body: bodies[i],
+  }));
+}
 
 /** The design only covers one course, so the others get generic copy built from their title. */
 function genericDetail(course: Course): DetailContent {
@@ -205,16 +243,14 @@ function genericDetail(course: Course): DetailContent {
       { title: "Module 4: Capstone and Next Steps", summary: "Complete a capstone project, get feedback, and plan your continued growth." },
     ],
     reviewsIntro: `Discover what our learners have to say about their experience with '${t}.' Read reviews and ratings from individuals who have completed the course.`,
+    reviews: genericReviews(t),
   };
 }
 
 export function getCourseDetail(slug: string): CourseDetail | undefined {
   const course = courses.find((c) => c.id === slug);
-  if (!course) return undefined;
+  const creator = course && getCreator(course.creatorId);
+  if (!course || !creator) return undefined;
   const detail = course.id === "digital-asset" ? digitalAsset : genericDetail(course);
-  const counts = detail.ratingBreakdown;
-  const reviewCount = counts.reduce((sum, n) => sum + n, 0);
-  const weighted = counts.reduce((sum, n, i) => sum + n * (5 - i), 0);
-  const rating = Math.round((weighted / reviewCount) * 10) / 10;
-  return { course, ...detail, rating, reviewCount };
+  return { course, creator, ...detail };
 }

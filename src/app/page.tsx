@@ -1,4 +1,5 @@
 import { Footer } from "@/components/layout/Footer";
+import { CourseFilterProvider } from "@/components/sections/CourseFilterContext";
 import { CreatorCta } from "@/components/sections/CreatorCta";
 import { CreatorShowcase } from "@/components/sections/CreatorShowcase";
 import { FeaturedCourses } from "@/components/sections/FeaturedCourses";
@@ -11,10 +12,12 @@ export default function HomePage() {
   return (
     <>
       <main>
-        <Hero />
-        <PartnerLogos />
-        <FeaturedCourses />
-        <LearningPaths />
+        <CourseFilterProvider>
+          <Hero />
+          <PartnerLogos />
+          <FeaturedCourses />
+          <LearningPaths />
+        </CourseFilterProvider>
         <CreatorShowcase />
         <CreatorCta />
         <Testimonials />
