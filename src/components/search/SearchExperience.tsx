@@ -78,7 +78,7 @@ export function SearchExperience({ initialQuery, initialScope, initialCategory }
       <section className="bg-grid overflow-hidden">
         <Navbar />
         <Container className="pt-6 pb-16 text-center lg:pt-[42px] lg:pb-[70px]">
-          <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-[44px]">
+          <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-heading-m">
             Find Your Next Course
           </h1>
           <form

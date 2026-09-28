@@ -21,10 +21,10 @@ export function CreatorShowcase() {
       <Container className="flex flex-col gap-24 lg:gap-[120px]">
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-6">
           <div className="max-w-[560px]">
-            <h2 className="font-display text-3xl leading-tight font-semibold text-ink-soft sm:text-4xl lg:text-[44px] lg:leading-[1.2]">
+            <h2 className="font-display text-3xl font-semibold text-ink-soft sm:text-4xl lg:text-heading-m">
               Your Path to Professional Growth Starts Here!
             </h2>
-            <p className="mt-8 text-base leading-[1.8] font-light text-ink-soft sm:text-lg lg:mt-12">
+            <p className="mt-8 text-body-m text-ink-soft sm:text-body-l lg:mt-12">
               Explore our curated selection of courses tailored to enhance your capabilities and
               accelerate your career journey. Whether you are looking to sharpen specific skills,
               gain industry expertise, or embark on a new career path entirely, we have the
@@ -33,7 +33,7 @@ export function CreatorShowcase() {
             <dl className="mt-10 flex gap-14">
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-col-reverse">
-                  <dt className="mt-1 text-lg font-light text-ink-soft">{stat.label}</dt>
+                  <dt className="mt-1 text-body-l text-ink-soft">{stat.label}</dt>
                   <dd className="text-4xl text-brand">{stat.value}</dd>
                 </div>
               ))}
@@ -45,10 +45,10 @@ export function CreatorShowcase() {
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-6">
           <CreatorVisual />
           <div className="max-w-[560px] lg:justify-self-end">
-            <h2 className="font-display text-3xl leading-tight font-semibold text-ink-soft sm:text-4xl lg:text-[44px] lg:leading-[1.2]">
+            <h2 className="font-display text-3xl font-semibold text-ink-soft sm:text-4xl lg:text-heading-m">
               Create &amp; Manage Courses Easily.
             </h2>
-            <p className="mt-8 text-base leading-[1.8] font-light text-ink-soft sm:text-lg">
+            <p className="mt-8 text-body-m text-ink-soft sm:text-body-l">
               <strong className="font-medium text-ink">ByteSpace</strong> supports individuals or
               entities in the creation, publication, and administration of educational courses.
             </p>

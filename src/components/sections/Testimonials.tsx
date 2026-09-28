@@ -7,10 +7,10 @@ export function Testimonials() {
     <section className="bg-glow py-20 lg:pt-[80px] lg:pb-[60px]">
       <Container>
         <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-[120px]">
-          <h2 className="font-display text-3xl leading-tight font-semibold text-ink sm:text-4xl lg:text-[44px] lg:leading-[1.2]">
+          <h2 className="font-display text-3xl font-semibold text-ink sm:text-4xl lg:text-heading-m">
             Discover What Our Community Is Saying
           </h2>
-          <p className="text-base leading-[1.8] font-light text-muted sm:text-lg">
+          <p className="text-body-m text-muted sm:text-body-l">
             At ByteSpace, our vibrant community of learners and creators is at the heart of what we
             do. Hear directly from those who have experienced the transformative journey of learning
             and creating on our platform. Explore testimonials that reflect the diverse perspectives

@@ -28,7 +28,7 @@ export function Hero() {
         <h1 className="mx-auto max-w-[880px] font-display text-4xl leading-[1.25] font-semibold text-white sm:text-5xl lg:text-[64px]">
           Get Access to Hundreds of Courses
         </h1>
-        <p className="mx-auto mt-6 max-w-[820px] text-base font-light text-white sm:text-lg lg:mt-10">
+        <p className="mx-auto mt-6 max-w-[820px] text-body-m text-white sm:text-body-l lg:mt-10">
           Unlock your creativity, gain valuable knowledge, and grow your business with our wide
           range of courses.
         </p>

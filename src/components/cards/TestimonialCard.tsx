@@ -15,7 +15,7 @@ export function TestimonialCard({ name, role, avatar, quote }: Testimonial) {
         <p className="font-display text-lg font-semibold text-ink">{name}</p>
         <p className="text-lg text-brand">{role}</p>
       </figcaption>
-      <blockquote className="mt-6 text-lg leading-[1.8] font-light text-muted">
+      <blockquote className="mt-6 text-body-l text-muted">
         &ldquo;{quote}&rdquo;
       </blockquote>
     </figure>

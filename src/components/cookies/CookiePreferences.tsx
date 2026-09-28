@@ -10,23 +10,34 @@ const STORAGE_KEY = "bytespace-cookie-preferences";
 type Preferences = { analytics: boolean; marketing: boolean };
 const DEFAULTS: Preferences = { analytics: false, marketing: false };
 
-const categories = [
+type Category = {
+  id: string;
+  title: string;
+  text: string;
+  /** The preference this switch controls, or null for cookies that are always on. */
+  pref: keyof Preferences | null;
+};
+
+const categories: Category[] = [
   {
-    key: "essential",
+    id: "essential",
     title: "Essential",
     text: "Required for the site to work, such as remembering your cart. Always on.",
+    pref: null,
   },
   {
-    key: "analytics",
+    id: "analytics",
     title: "Analytics",
     text: "Help us understand which pages and courses are popular so we can improve them.",
+    pref: "analytics",
   },
   {
-    key: "marketing",
+    id: "marketing",
     title: "Marketing",
     text: "Let us show you relevant course recommendations on other sites.",
+    pref: "marketing",
   },
-] as const;
+];
 
 const store = createLocalStore<Preferences>(STORAGE_KEY, DEFAULTS, (value) =>
   value && typeof value === "object"
@@ -53,12 +64,12 @@ export function CookiePreferences() {
 
   return (
     <div className="flex flex-col gap-4">
-      {categories.map(({ key, title, text }) => {
-        const locked = key === "essential";
-        const checked = locked || prefs[key];
-        const id = `cookie-${key}`;
+      {categories.map(({ id: categoryId, title, text, pref }) => {
+        const locked = pref === null;
+        const checked = pref === null || prefs[pref];
+        const id = `cookie-${categoryId}`;
         return (
-          <div key={key} className="flex items-start justify-between gap-6 rounded-3xl border border-line-strong p-6">
+          <div key={categoryId} className="flex items-start justify-between gap-6 rounded-3xl border border-line-strong p-6">
             <div>
               <label htmlFor={id} className="font-display text-lg font-semibold text-ink">
                 {title}
@@ -75,9 +86,9 @@ export function CookiePreferences() {
               aria-describedby={`${id}-desc`}
               disabled={locked}
               onClick={() => {
-                if (locked) return;
+                if (pref === null) return;
                 setSaved(false);
-                setDraft({ ...prefs, [key]: !prefs[key] });
+                setDraft({ ...prefs, [pref]: !prefs[pref] });
               }}
               className={cn(
                 "relative mt-1 h-7 w-12 shrink-0 cursor-pointer rounded-full transition disabled:cursor-not-allowed disabled:opacity-60",

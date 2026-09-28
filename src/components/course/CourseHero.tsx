@@ -21,7 +21,7 @@ export function CourseHero({ detail }: { detail: CourseDetail }) {
       <Container className="pt-6 pb-10 lg:pt-[52px] lg:pb-[62px]">
         <div className="flex flex-col-reverse gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h1 className="font-display text-3xl leading-tight font-semibold text-white sm:text-4xl lg:text-[44px]">
+            <h1 className="font-display text-3xl font-semibold text-white sm:text-4xl lg:text-heading-m">
               {detail.headline}
             </h1>
             <p className="mt-2 font-display text-lg font-semibold text-white sm:text-xl">

@@ -17,14 +17,14 @@ type AuthLayoutProps = {
 
 export function AuthLayout({ tagline, description, eyebrow, title, children }: AuthLayoutProps) {
   return (
-    <main id="main" className="bg-grid min-h-screen overflow-hidden">
+    <main id="content" tabIndex={-1} className="bg-grid min-h-screen overflow-hidden outline-none">
       <Container className="grid gap-12 py-10 lg:grid-cols-[1fr_579px] lg:items-start lg:gap-16 lg:pt-[35px] lg:pb-[120px]">
         <div>
           <Logo markOnly />
           <h1 className="mt-8 font-display text-xl font-semibold text-white lg:mt-[58px]">
             {tagline}
           </h1>
-          <p className="mt-4 max-w-[480px] text-base leading-[1.8] font-light text-white sm:text-lg">
+          <p className="mt-4 max-w-[480px] text-body-m text-white sm:text-body-l">
             {description}
           </p>
           <AuthShowcase />
@@ -32,7 +32,7 @@ export function AuthLayout({ tagline, description, eyebrow, title, children }: A
 
         <section className="rounded-3xl bg-white px-6 py-10 sm:px-16 sm:py-[66px] lg:mt-[85px]">
           <p className="text-lg text-brand">{eyebrow}</p>
-          <h2 className="mt-1 font-display text-4xl leading-tight font-semibold text-ink-soft sm:text-[44px]">
+          <h2 className="mt-1 font-display text-4xl font-semibold text-ink-soft sm:text-heading-m">
             {title}
           </h2>
           {children}

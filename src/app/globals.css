@@ -1,21 +1,94 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand: #003be2;
-  --color-brand-dark: #0030bd;
-  --color-lime: #d4fb20;
-  --color-lime-bright: #cbfc01;
-  --color-ink: #191a1c;
-  --color-ink-soft: #242528;
-  --color-muted: #6b6e75;
-  --color-subtle: #82868e;
-  --color-line: #e5e6e8;
-  --color-line-strong: #ced0d3;
-  --color-surface: #f5f5f6;
-  --color-surface-soft: #fafafa;
+  /* ---- Style guide palettes (01 Colors) ---- */
 
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  /* Neutral · Black */
+  --color-neutral-50: #f5f5f6;
+  --color-neutral-100: #e5e6e8;
+  --color-neutral-200: #ced0d3;
+  --color-neutral-300: #abaeb5;
+  --color-neutral-400: #82868e;
+  --color-neutral-500: #666973;
+  --color-neutral-600: #585a62;
+  --color-neutral-700: #4b4c53;
+  --color-neutral-800: #424348;
+  --color-neutral-900: #3a3b3f;
+  --color-neutral-950: #242528;
+
+  /* Primary · Electric Violet */
+  --color-primary-50: #e7f6ff;
+  --color-primary-100: #d3eeff;
+  --color-primary-200: #b0ddff;
+  --color-primary-300: #81c5ff;
+  --color-primary-400: #4f9dff;
+  --color-primary-500: #2872ff;
+  --color-primary-600: #0445ff;
+  --color-primary-700: #0043ff;
+  --color-primary-800: #003be2;
+  --color-primary-900: #0b36a4;
+  --color-primary-950: #071e5f;
+
+  /* Secondary · Crimson (the lime accent) */
+  --color-secondary-50: #fdffe4;
+  --color-secondary-100: #faffc5;
+  --color-secondary-200: #f2ff92;
+  --color-secondary-300: #e4ff54;
+  --color-secondary-400: #d4fb20;
+  --color-secondary-500: #cbfc01;
+  --color-secondary-600: #8cb400;
+  --color-secondary-700: #6a8902;
+  --color-secondary-800: #546b09;
+  --color-secondary-900: #465a0d;
+  --color-secondary-950: #243300;
+
+  /* ---- Semantic aliases used by the components ---- */
+  --color-brand: var(--color-primary-800);
+  --color-brand-dark: var(--color-primary-900);
+  --color-lime: var(--color-secondary-400);
+  --color-lime-bright: var(--color-secondary-500);
+  --color-ink: #191a1c; /* heading color used on the screens, one step darker than neutral-950 */
+  --color-ink-soft: var(--color-neutral-950);
+  --color-muted: var(--color-neutral-500);
+  --color-subtle: var(--color-neutral-400);
+  --color-line: var(--color-neutral-100);
+  --color-line-strong: var(--color-neutral-200);
+  --color-surface: var(--color-neutral-50);
+  --color-surface-soft: #fafafa; /* section background used on the screens */
+
+  /* ---- Typography (02 Typography) ---- */
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+
+  /* Headings: Poppins SemiBold, 120% line height */
+  --text-heading-l: 4.5rem;
+  --text-heading-l--line-height: 1.2;
+  --text-heading-m: 2.75rem;
+  --text-heading-m--line-height: 1.2;
+  --text-heading-s: 2.25rem;
+  --text-heading-s--line-height: 1.2;
+  --text-heading-xs: 1.25rem;
+  --text-heading-xs--line-height: 1.2;
+
+  /* Body: Satoshi Regular, 160% line height */
+  --text-body-l: 1.125rem;
+  --text-body-l--line-height: 1.6;
+  --text-body-m: 1rem;
+  --text-body-m--line-height: 1.6;
+  --text-body-s: 0.875rem;
+  --text-body-s--line-height: 1.6;
+  --text-body-xs: 0.75rem;
+  --text-body-xs--line-height: 1.6;
+
+  /* Labels: Satoshi Medium, 120% line height */
+  --text-label-l: 1.125rem;
+  --text-label-l--line-height: 1.2;
+  --text-label-m: 1rem;
+  --text-label-m--line-height: 1.2;
+  --text-label-s: 0.875rem;
+  --text-label-s--line-height: 1.2;
+  --text-label-xs: 0.75rem;
+  --text-label-xs--line-height: 1.2;
 
   --shadow-card: 0 24px 48px -12px rgb(16 24 40 / 0.14);
 }
