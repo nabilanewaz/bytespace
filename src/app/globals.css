@@ -29,6 +29,16 @@ body {
   color: var(--color-ink);
 }
 
+/*
+ * Keyboard focus ring: a dark outline with a lime halo, visible on both the
+ * white and the blue sections. Components can still override it.
+ */
+:where(a, button, summary, select, [role="switch"]):focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--color-lime);
+}
+
 /* Blue section with the faint 120px grid used by the hero and CTA. */
 .bg-grid {
   background-color: var(--color-brand);

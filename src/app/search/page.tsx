@@ -18,7 +18,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
 
   return (
     <>
-      <main>
+      <main id="main">
         <SearchExperience
           initialQuery={first(params.q)}
           initialScope={scope}

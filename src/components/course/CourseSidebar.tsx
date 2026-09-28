@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FileText, Headset, IdCard, Video } from "lucide-react";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { EnrollButton } from "@/components/course/EnrollButton";
+import { ButtonLink } from "@/components/ui/Button";
 import { courseIncludes, type CourseDetail } from "@/data/courseDetails";
 import { cn } from "@/lib/cn";
 
@@ -43,9 +44,7 @@ export function CourseSidebar({ detail, className }: { detail: CourseDetail; cla
         </span>
         /lifetime
       </p>
-      <Button size="lg" className="mt-6 w-full">
-        Enroll Now
-      </Button>
+      <EnrollButton courseId={detail.course.id} className="mt-6 w-full" />
 
       <h3 className="mt-8 font-display text-xl font-semibold text-ink-soft">This course includes</h3>
       <ul className="mt-5 flex flex-col gap-4">

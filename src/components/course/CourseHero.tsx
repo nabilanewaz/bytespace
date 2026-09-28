@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ChartNoAxesColumn, Play, Star, Users } from "lucide-react";
+import { ChartNoAxesColumn, Star, Users } from "lucide-react";
 import { ShareButton } from "@/components/course/ShareButton";
+import { VideoPreview } from "@/components/course/VideoPreview";
 import { courseGrid } from "@/components/course/layout";
 import { Navbar } from "@/components/layout/Navbar";
 import { Container } from "@/components/ui/Container";
@@ -54,22 +54,7 @@ export function CourseHero({ detail }: { detail: CourseDetail }) {
         </ul>
 
         <div className={cn("mt-10 lg:mt-[59px]", courseGrid)}>
-          <div className="relative h-[220px] overflow-hidden rounded-3xl sm:h-[380px] lg:h-[479px]">
-            <Image
-              src="/images/course/video-poster.webp"
-              alt={`Preview image for ${detail.headline}`}
-              fill
-              priority
-              sizes="(min-width: 1280px) 725px, (min-width: 1024px) 60vw, 100vw"
-              className="object-cover"
-            />
-            <span
-              aria-hidden="true"
-              className="absolute top-1/2 left-1/2 grid size-[60px] -translate-1/2 place-items-center rounded-full bg-white/90 shadow-card"
-            >
-              <Play className="ml-1 size-6 fill-ink-soft text-ink-soft" />
-            </span>
-          </div>
+          <VideoPreview title={detail.headline} />
         </div>
       </Container>
     </section>

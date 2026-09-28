@@ -17,7 +17,7 @@ type AuthLayoutProps = {
 
 export function AuthLayout({ tagline, description, eyebrow, title, children }: AuthLayoutProps) {
   return (
-    <main className="bg-grid min-h-screen overflow-hidden">
+    <main id="main" className="bg-grid min-h-screen overflow-hidden">
       <Container className="grid gap-12 py-10 lg:grid-cols-[1fr_579px] lg:items-start lg:gap-16 lg:pt-[35px] lg:pb-[120px]">
         <div>
           <Logo markOnly />

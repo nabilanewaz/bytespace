@@ -34,7 +34,7 @@ export function ReviewList({ reviews }: { reviews: Review[] }) {
               <>
                 <Star className="size-5 fill-ink-soft text-ink-soft" aria-hidden="true" />
                 {value}
-                <span className="sr-only">stars</span>
+                <span className="sr-only">{value === 1 ? " star" : " stars"}</span>
               </>
             )}
           </button>
