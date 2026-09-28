@@ -18,7 +18,10 @@ export function CourseCard({ course, starTone = "muted", href, className }: Cour
   return (
     <article
       className={cn(
-        "relative flex min-w-0 flex-col rounded-3xl border border-line-strong bg-white p-4 transition hover:shadow-card",
+        "flex min-w-0 flex-col rounded-3xl border border-line-strong bg-white p-4 transition hover:shadow-card",
+        // Contains the stretched title link. Only when linked, so decorative
+        // cards can still be positioned absolutely by the caller.
+        href && "relative",
         className,
       )}
     >

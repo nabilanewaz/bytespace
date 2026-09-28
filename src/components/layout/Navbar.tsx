@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { CartLink } from "@/components/layout/CartLink";
+import { UserMenu } from "@/components/layout/UserMenu";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { mainNav, type NavLink } from "@/data/site";
@@ -53,20 +54,7 @@ export function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-6 text-base text-surface md:flex">
-            <Link
-              href="/login"
-              aria-current={pathname === "/login" ? "page" : undefined}
-              className="transition hover:text-lime"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/register"
-              aria-current={pathname === "/register" ? "page" : undefined}
-              className="transition hover:text-lime"
-            >
-              Join Us
-            </Link>
+            <UserMenu variant="desktop" />
             <CartLink />
           </div>
 
@@ -108,21 +96,8 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-            <div className="mt-6 flex gap-3 border-t border-line pt-6">
-              <Link
-                href="/login"
-                onClick={close}
-                className="flex-1 rounded-full border border-line py-2.5 text-center text-ink"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/register"
-                onClick={close}
-                className="flex-1 rounded-full bg-lime py-2.5 text-center text-ink"
-              >
-                Join Us
-              </Link>
+            <div className="mt-6 border-t border-line pt-6">
+              <UserMenu variant="mobile" onNavigate={close} />
             </div>
           </nav>
         )}

@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { LoaderCircle } from "lucide-react";
+import { signInWithGoogle } from "@/lib/authActions";
 
 const providers = [
   {
@@ -27,7 +30,19 @@ const providers = [
   },
 ];
 
-export function SocialLogin() {
+const buttonClass =
+  "grid size-[72px] cursor-pointer place-items-center rounded-2xl border border-line text-ink transition hover:border-brand hover:text-brand disabled:cursor-wait disabled:opacity-60";
+
+type SocialLoginProps = {
+  /** True when Google OAuth credentials are configured. */
+  googleEnabled: boolean;
+  /** Where to return after signing in. */
+  redirectTo: string;
+  /** Message for a failed sign-in (from the `?error=` query parameter). */
+  error?: string;
+};
+
+export function SocialLogin({ googleEnabled, redirectTo, error }: SocialLoginProps) {
   const [chosen, setChosen] = useState<string | null>(null);
 
   return (
@@ -38,21 +53,44 @@ export function SocialLogin() {
         <span className="h-px flex-1 bg-line" />
       </div>
       <div className="mt-8 flex justify-center gap-4">
-        {providers.map((p) => (
-          <button
-            key={p.name}
-            type="button"
-            aria-label={`Continue with ${p.name}`}
-            onClick={() => setChosen(p.name)}
-            className="grid size-[72px] cursor-pointer place-items-center rounded-2xl border border-line text-ink transition hover:border-brand hover:text-brand"
-          >
-            {p.icon}
-          </button>
-        ))}
+        {providers.map((p) =>
+          p.name === "Google" && googleEnabled ? (
+            <form key={p.name} action={signInWithGoogle.bind(null, redirectTo)}>
+              <GoogleSubmit icon={p.icon} />
+            </form>
+          ) : (
+            <button
+              key={p.name}
+              type="button"
+              aria-label={`Continue with ${p.name}`}
+              onClick={() => setChosen(p.name)}
+              className={buttonClass}
+            >
+              {p.icon}
+            </button>
+          ),
+        )}
       </div>
       <p role="status" className="mt-4 min-h-6 text-center text-sm text-brand">
-        {chosen && `${chosen} sign-in isn't available in this demo. Please use email instead.`}
+        {chosen
+          ? `${chosen} sign-in isn't available in this demo. Please ${googleEnabled ? "use Google or" : "use"} email instead.`
+          : error}
       </p>
     </div>
+  );
+}
+
+/** Submit button that shows a spinner while redirecting to Google. */
+function GoogleSubmit({ icon }: { icon: React.ReactNode }) {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      aria-label={pending ? "Redirecting to Google…" : "Continue with Google"}
+      className={buttonClass}
+    >
+      {pending ? <LoaderCircle className="size-8 animate-spin" aria-hidden="true" /> : icon}
+    </button>
   );
 }

@@ -33,6 +33,19 @@ npm run build    # production build
 npm run lint
 ```
 
+## Google sign-in (optional)
+
+"Continue with Google" on `/login` uses [Auth.js v5](https://authjs.dev) with a cookie-based session, so no database is needed. After signing in, the navbar shows the user's photo and name with a Sign out button, and you return to the page you came from.
+
+It turns on when these variables are set (see `.env.example`):
+
+| Variable | Where it comes from |
+| --- | --- |
+| `AUTH_SECRET` | `npx auth secret` (random string) |
+| `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google Cloud Console → Credentials → OAuth client ID (Web application) |
+
+Add `https://<your-domain>/api/auth/callback/google` (and `http://localhost:3000/api/auth/callback/google` for local development) as an authorized redirect URI. Without the variables, the site works as before and the Google button shows a demo message.
+
 ## Project structure
 
 ```
