@@ -3,16 +3,18 @@
 import { Check } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { cart, useCart } from "@/lib/cart";
+import { useEnrollments } from "@/lib/enrollments";
 
-/** Adds the course to the cart; once added, becomes a link to the cart. */
+/** Adds the course to the cart; once added (or enrolled), links to the cart (or My Courses). */
 export function EnrollButton({ courseId, className }: { courseId: string; className?: string }) {
+  const enrolled = useEnrollments().includes(courseId);
   const inCart = useCart().includes(courseId);
 
-  if (inCart) {
+  if (enrolled || inCart) {
     return (
-      <ButtonLink href="/cart" size="lg" className={className}>
+      <ButtonLink href={enrolled ? "/my-courses" : "/cart"} size="lg" className={className}>
         <Check className="size-5" aria-hidden="true" />
-        In your cart. Go to Cart
+        {enrolled ? "Enrolled. Go to My Courses" : "In your cart. Go to Cart"}
       </ButtonLink>
     );
   }

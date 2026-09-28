@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { CartLink } from "@/components/layout/CartLink";
+import { MyCoursesLink } from "@/components/layout/MyCoursesLink";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
@@ -54,6 +55,9 @@ export function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-6 text-base text-surface md:flex">
+            <MyCoursesLink
+              className={cn("transition hover:text-lime", pathname === "/my-courses" && "font-medium")}
+            />
             <UserMenu variant="desktop" />
             <CartLink />
           </div>
@@ -95,6 +99,12 @@ export function Navbar() {
                   </Link>
                 </li>
               ))}
+              <li className="empty:hidden">
+                <MyCoursesLink
+                  onClick={close}
+                  className={cn("block hover:text-brand", pathname === "/my-courses" && "font-medium text-brand")}
+                />
+              </li>
             </ul>
             <div className="mt-6 border-t border-line pt-6">
               <UserMenu variant="mobile" onNavigate={close} />

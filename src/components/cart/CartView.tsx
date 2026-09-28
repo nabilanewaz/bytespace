@@ -7,6 +7,7 @@ import { CircleCheck, Trash2 } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { courses } from "@/data/courses";
 import { cart, useCart } from "@/lib/cart";
+import { enrollments } from "@/lib/enrollments";
 
 export function CartView() {
   const ids = useCart();
@@ -27,9 +28,14 @@ export function CartView() {
             <li key={t}>{t}</li>
           ))}
         </ul>
-        <ButtonLink href="/search" size="lg" className="mt-8">
-          Browse more courses
-        </ButtonLink>
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <ButtonLink href="/my-courses" size="lg">
+            Go to My Courses
+          </ButtonLink>
+          <ButtonLink href="/search" size="lg" variant="outline">
+            Browse more courses
+          </ButtonLink>
+        </div>
       </div>
     );
   }
@@ -100,6 +106,7 @@ export function CartView() {
           size="lg"
           className="mt-6 w-full"
           onClick={() => {
+            enrollments.add(items.map((c) => c.id));
             setEnrolledTitles(items.map((c) => c.title));
             cart.clear();
           }}

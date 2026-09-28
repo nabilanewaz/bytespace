@@ -1,8 +1,9 @@
 "use client";
 
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useAuthEnabled } from "@/components/auth/AuthProvider";
 
@@ -20,7 +21,9 @@ function SessionUserMenu(props: UserMenuProps) {
 
   if (status === "loading") {
     // Reserve roughly the space of the guest links to avoid layout shift.
-    return <span aria-hidden="true" className={props.variant === "desktop" ? "h-6 w-[126px]" : "h-11"} />;
+    return (
+      <span aria-hidden="true" className={props.variant === "desktop" ? "block h-6 w-[126px]" : "block h-11"} />
+    );
   }
   if (!session?.user) return <GuestLinks {...props} />;
 
@@ -72,14 +75,34 @@ function SessionUserMenu(props: UserMenuProps) {
   );
 }
 
-function GuestLinks({ variant, onNavigate }: UserMenuProps) {
-  const pathname = usePathname();
-  // Come back to the current page after signing in.
-  const loginHref =
-    pathname === "/login" || pathname === "/register"
-      ? "/login"
-      : `/login?callbackUrl=${encodeURIComponent(pathname)}`;
+/** Sign-in link that returns to the current page, including its query (e.g. search filters). */
+function loginHrefFor(pathname: string, query = "") {
+  if (pathname === "/login" || pathname === "/register") return "/login";
+  return `/login?callbackUrl=${encodeURIComponent(query ? `${pathname}?${query}` : pathname)}`;
+}
 
+function GuestLinks(props: UserMenuProps) {
+  const pathname = usePathname();
+  // useSearchParams needs a Suspense boundary on statically rendered pages;
+  // until it resolves, the link returns to the path without its query.
+  return (
+    <Suspense fallback={<GuestLinksView {...props} pathname={pathname} loginHref={loginHrefFor(pathname)} />}>
+      <GuestLinksWithQuery {...props} pathname={pathname} />
+    </Suspense>
+  );
+}
+
+function GuestLinksWithQuery(props: UserMenuProps & { pathname: string }) {
+  const query = useSearchParams().toString();
+  return <GuestLinksView {...props} loginHref={loginHrefFor(props.pathname, query)} />;
+}
+
+function GuestLinksView({
+  variant,
+  onNavigate,
+  pathname,
+  loginHref,
+}: UserMenuProps & { pathname: string; loginHref: string }) {
   if (variant === "mobile") {
     return (
       <div className="flex gap-3">
