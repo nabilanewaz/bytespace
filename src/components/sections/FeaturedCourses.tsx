@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
-import { CourseCard } from "@/components/cards/CourseCard";
+import { CourseGrid } from "@/components/courses/CourseGrid";
 import {
   DEFAULT_FILTER,
   matchesFilter,
@@ -26,10 +26,8 @@ export function FeaturedCourses() {
   const filtered = courses.filter((c) => matchesFilter(c, filter));
 
   const count = filtered.length;
-  const resultsLabel =
-    filter.kind === "search"
-      ? `${count} ${count === 1 ? "result" : "results"} for “${filter.query}”`
-      : `${count} ${filter.kind === "path" ? filter.label : filter.category} ${count === 1 ? "course" : "courses"}`;
+  const label = filter.kind === "path" ? filter.label : filter.category;
+  const resultsLabel = `${count} ${label} ${count === 1 ? "course" : "courses"}`;
 
   return (
     <section id="courses" className="scroll-mt-8 py-20 lg:py-[80px]">
@@ -93,19 +91,10 @@ export function FeaturedCourses() {
             </div>
           )}
 
-          {filtered.length > 0 ? (
-            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((course) => (
-                <CourseCard key={course.id} course={course} href={`/courses/${course.id}`} />
-              ))}
-            </div>
-          ) : (
-            <p className="rounded-3xl bg-surface px-6 py-16 text-center text-lg text-muted">
-              {filter.kind === "search"
-                ? "No courses match your search. Try a different keyword."
-                : `New ${filter.kind === "path" ? filter.label : filter.category} courses are coming soon. Check back shortly!`}
-            </p>
-          )}
+          <CourseGrid
+            courses={filtered}
+            emptyMessage={`New ${label} courses are coming soon. Check back shortly!`}
+          />
         </div>
       </Container>
     </section>

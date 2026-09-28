@@ -6,8 +6,7 @@ import type { Course } from "@/data/courses";
 /** What the home-page course grid is currently showing. */
 export type CourseFilter =
   | { kind: "category"; category: string }
-  | { kind: "path"; label: string; categories: string[] }
-  | { kind: "search"; query: string };
+  | { kind: "path"; label: string; categories: string[] };
 
 export const DEFAULT_FILTER: CourseFilter = { kind: "category", category: "Featured" };
 
@@ -21,8 +20,8 @@ type CourseFilterContextValue = {
 const CourseFilterContext = createContext<CourseFilterContextValue | null>(null);
 
 /**
- * Shares the course filter between the hero search, the category tabs and the
- * learning-path cards, which live in separate sections of the home page.
+ * Shares the course filter between the category tabs and the learning-path
+ * cards, which live in separate sections of the home page.
  */
 export function CourseFilterProvider({ children }: { children: React.ReactNode }) {
   const [filter, setFilter] = useState<CourseFilter>(DEFAULT_FILTER);
@@ -44,20 +43,7 @@ export function useCourseFilter() {
 }
 
 export function matchesFilter(course: Course, filter: CourseFilter) {
-  switch (filter.kind) {
-    case "category":
-      return course.categories.includes(filter.category);
-    case "path":
-      return course.categories.some((c) => filter.categories.includes(c));
-    case "search": {
-      const haystack = [course.title, course.creator, course.level, ...course.categories]
-        .join(" ")
-        .toLowerCase();
-      return filter.query
-        .toLowerCase()
-        .split(/\s+/)
-        .filter(Boolean)
-        .every((word) => haystack.includes(word));
-    }
-  }
+  return filter.kind === "category"
+    ? course.categories.includes(filter.category)
+    : course.categories.some((c) => filter.categories.includes(c));
 }

@@ -1,33 +1,29 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
-import { useCourseFilter } from "@/components/sections/CourseFilterContext";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 
-/** Hero search: filters the course grid by title, creator, level or category. */
+/** Hero search: opens the search page with the query. */
 export function SearchBar({ className }: { className?: string }) {
-  const { filter, showCourses } = useCourseFilter();
-  // Remounting the input on filter changes keeps it in sync: it shows the
-  // active query, and empties when the grid switches to a category or path.
-  const activeQuery = filter.kind === "search" ? filter.query : "";
+  const router = useRouter();
 
   return (
     <form
       role="search"
+      action="/search"
       className={cn("flex w-full max-w-[580px] items-center gap-3 sm:gap-4", className)}
       onSubmit={(e) => {
         e.preventDefault();
         const query = String(new FormData(e.currentTarget).get("q") ?? "").trim();
-        showCourses(query ? { kind: "search", query } : { kind: "category", category: "Featured" });
+        router.push(query ? `/search?q=${encodeURIComponent(query)}` : "/search");
       }}
     >
       <label className="flex h-[52px] flex-1 items-center gap-3 rounded-full bg-white px-6 focus-within:ring-2 focus-within:ring-lime">
         <Search className="size-5 shrink-0 text-subtle" aria-hidden="true" />
         <span className="sr-only">Search courses</span>
         <input
-          key={activeQuery}
-          defaultValue={activeQuery}
           type="search"
           name="q"
           placeholder="Course, topic, creator"

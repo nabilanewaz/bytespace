@@ -11,8 +11,9 @@ import { cn } from "@/lib/cn";
 
 /** Home only matches "/" itself; other links match their whole section (e.g. /courses/…). */
 function isCurrent(link: NavLink, pathname: string) {
-  if (!link.section) return false;
-  return link.section === "/" ? pathname === "/" : pathname.startsWith(link.section);
+  return (link.sections ?? []).some((section) =>
+    section === "/" ? pathname === "/" : pathname.startsWith(section),
+  );
 }
 
 export function Navbar() {
