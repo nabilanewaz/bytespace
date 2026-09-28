@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ChartNoAxesColumn, Star } from "lucide-react";
 import { AvatarStack } from "@/components/ui/AvatarStack";
 import type { Course } from "@/data/courses";
@@ -8,14 +9,16 @@ type CourseCardProps = {
   course: Course;
   /** Color of the rating star; the auth pages use lime. */
   starTone?: "muted" | "lime";
+  /** Makes the whole card a link to the course page. */
+  href?: string;
   className?: string;
 };
 
-export function CourseCard({ course, starTone = "muted", className }: CourseCardProps) {
+export function CourseCard({ course, starTone = "muted", href, className }: CourseCardProps) {
   return (
     <article
       className={cn(
-        "flex min-w-0 flex-col rounded-3xl border border-line-strong bg-white p-4 transition hover:shadow-card",
+        "relative flex min-w-0 flex-col rounded-3xl border border-line-strong bg-white p-4 transition hover:shadow-card",
         className,
       )}
     >
@@ -43,7 +46,13 @@ export function CourseCard({ course, starTone = "muted", className }: CourseCard
 
       <div className="mt-4 flex items-start justify-between gap-3">
         <h3 className="min-w-0 truncate font-display text-xl font-semibold text-ink" title={course.title}>
-          {course.title}
+          {href ? (
+            <Link href={href} className="after:absolute after:inset-0 after:rounded-3xl">
+              {course.title}
+            </Link>
+          ) : (
+            course.title
+          )}
         </h3>
         <p className="flex shrink-0 items-center gap-1 text-lg text-muted">
           {course.rating}

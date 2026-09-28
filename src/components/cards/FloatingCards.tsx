@@ -41,9 +41,16 @@ export function HappyStudentsCard({
 export function LearningProgressCard({
   className,
   percent = 55,
-}: FloatingCardProps & { percent?: number }) {
+  bordered = false,
+}: FloatingCardProps & { percent?: number; bordered?: boolean }) {
   return (
-    <div className={cn("rounded-2xl bg-white px-4 pt-4 pb-4 shadow-card", className)}>
+    <div
+      className={cn(
+        "rounded-2xl bg-white p-4",
+        bordered ? "border border-line-strong" : "shadow-card",
+        className,
+      )}
+    >
       <p className="text-sm text-ink">Learning Progress</p>
       <p className="mt-1 font-display text-4xl font-semibold text-ink lg:text-5xl">{percent}%</p>
       <div

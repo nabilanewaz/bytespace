@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { CircleCheck } from "lucide-react";
 import { CourseCard } from "@/components/cards/CourseCard";
 import {
   HappyStudentsCard,
   LearningProgressCard,
   RevenueCard,
 } from "@/components/cards/FloatingCards";
+import { CheckList } from "@/components/ui/CheckList";
 import { Container } from "@/components/ui/Container";
 import { Shape } from "@/components/ui/Shape";
 import { courses } from "@/data/courses";
@@ -52,14 +52,7 @@ export function CreatorShowcase() {
               <strong className="font-medium text-ink">ByteSpace</strong> supports individuals or
               entities in the creation, publication, and administration of educational courses.
             </p>
-            <ul className="mt-8 flex flex-col gap-4">
-              {creatorBenefits.map((benefit) => (
-                <li key={benefit} className="flex items-center gap-3 text-lg text-ink-soft">
-                  <CircleCheck className="size-6 fill-brand text-white" aria-hidden="true" />
-                  {benefit}
-                </li>
-              ))}
-            </ul>
+            <CheckList items={creatorBenefits} className="mt-8" />
           </div>
         </div>
       </Container>

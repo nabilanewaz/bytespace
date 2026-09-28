@@ -69,7 +69,7 @@ export function FeaturedCourses() {
           {filtered.length > 0 ? (
             <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((course) => (
-                <CourseCard key={course.id} course={course} />
+                <CourseCard key={course.id} course={course} href={`/courses/${course.id}`} />
               ))}
             </div>
           ) : (
