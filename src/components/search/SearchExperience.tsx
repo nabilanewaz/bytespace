@@ -8,13 +8,13 @@ import { Navbar } from "@/components/layout/Navbar";
 import { CreatorResults } from "@/components/search/CreatorResults";
 import { Container } from "@/components/ui/Container";
 import { Pagination } from "@/components/ui/Pagination";
-import { courses } from "@/data/courses";
+import { courseCategories, courses } from "@/data/courses";
+import type { SelectOption } from "@/components/ui/SelectPill";
 import { creators } from "@/data/creators";
 import {
   ALL,
   DEFAULT_FILTERS,
   applyCourseFilters,
-  categoryOptions,
   hasActiveFilters,
   type CourseFilters,
 } from "@/lib/courseFilters";
@@ -30,7 +30,11 @@ type SearchExperienceProps = {
   initialCategory: string;
 };
 
-const categories = categoryOptions(courses);
+/** Every catalog category in the design's order, including ones with no courses yet. */
+const categories: SelectOption[] = [
+  { value: ALL, label: "All categories" },
+  ...courseCategories.filter((c) => c !== "Featured").map((c) => ({ value: c, label: c })),
+];
 
 export function SearchExperience({ initialQuery, initialScope, initialCategory }: SearchExperienceProps) {
   const [scope, setScope] = useState<SearchScope>(initialScope);
@@ -146,13 +150,17 @@ export function SearchExperience({ initialQuery, initialScope, initialCategory }
               </p>
               <CourseGrid
                 courses={pageResults}
-                emptyMessage="No courses match your search. Try a different keyword or clear the filters."
+                emptyMessage={
+                  !filters.query && filters.category !== ALL && !hasActiveFilters({ ...filters, category: ALL })
+                    ? `New ${filters.category} courses are coming soon.`
+                    : "No courses match your search. Try a different keyword or clear the filters."
+                }
                 onReset={
                   filters.query || hasActiveFilters(filters)
                     ? () => updateFilters({ ...DEFAULT_FILTERS, sort: filters.sort })
                     : undefined
                 }
-                resetLabel="Clear search and filters"
+                resetLabel="Browse all courses"
               />
               <Pagination
                 className="mt-16 lg:mt-[72px]"

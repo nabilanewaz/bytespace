@@ -8,37 +8,43 @@ export type NavLink = {
 export const mainNav: NavLink[] = [
   { label: "Home", href: "/", sections: ["/"] },
   { label: "Courses", href: "/search", sections: ["/search", "/courses"] },
-  { label: "Creators", href: "/#creators", sections: ["/creators"] },
+  { label: "Creators", href: "/creators", sections: ["/creators"] },
 ];
+
+/** Search page filtered to one course category. */
+const categoryLink = (label: string, category: string): NavLink => ({
+  label,
+  href: `/search?category=${encodeURIComponent(category)}`,
+});
 
 export const footerColumns: NavLink[][] = [
   [
     { label: "Featured Courses", href: "/#courses" },
     { label: "Featured Categories", href: "/#learning-paths" },
-    { label: "Business", href: "/#learning-paths" },
-    { label: "IT", href: "/#learning-paths" },
-    { label: "Design", href: "/#learning-paths" },
+    categoryLink("Business", "Business"),
+    categoryLink("IT", "Data Science"),
+    categoryLink("Design", "UI/UX Design"),
   ],
   [
-    { label: "Development", href: "/#learning-paths" },
-    { label: "Marketing", href: "/#learning-paths" },
-    { label: "Photography", href: "/#learning-paths" },
-    { label: "Finance", href: "/#learning-paths" },
-    { label: "Sport", href: "/#learning-paths" },
+    categoryLink("Development", "Web Development"),
+    categoryLink("Marketing", "Marketing"),
+    categoryLink("Photography", "Photography"),
+    categoryLink("Finance", "Finance"),
+    categoryLink("Sport", "Health & Fitness"),
   ],
   [
     { label: "Become a Creator", href: "/register" },
-    { label: "Affiliate Program", href: "#" },
-    { label: "Contact", href: "#" },
-    { label: "Help", href: "#" },
-    { label: "About", href: "#" },
+    { label: "Affiliate Program", href: "/affiliate" },
+    { label: "Contact", href: "/contact" },
+    { label: "Help", href: "/help" },
+    { label: "About", href: "/about" },
   ],
 ];
 
 export const legalLinks: NavLink[] = [
-  { label: "Privacy Policy", href: "#" },
-  { label: "Terms of Service", href: "#" },
-  { label: "Cookies Settings", href: "#" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Cookies Settings", href: "/cookies" },
 ];
 
 export const happyStudentAvatars = [1, 2, 3, 4, 5, 6, 7].map(

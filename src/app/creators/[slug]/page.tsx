@@ -31,7 +31,7 @@ export default async function CreatorProfilePage({ params }: PageProps<"/creator
 
   return (
     <>
-      <main>
+      <main id="main">
         <CreatorHero creator={creator} courseCount={courses.length} />
         <Container className="py-14 lg:pt-[62px] lg:pb-[62px]">
           <CreatorCourses courses={courses} />

@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 const providers = [
   {
     name: "Facebook",
@@ -24,6 +28,8 @@ const providers = [
 ];
 
 export function SocialLogin() {
+  const [chosen, setChosen] = useState<string | null>(null);
+
   return (
     <div className="mt-12 lg:mt-[70px]">
       <div className="flex items-center gap-3 text-lg text-subtle">
@@ -37,12 +43,16 @@ export function SocialLogin() {
             key={p.name}
             type="button"
             aria-label={`Continue with ${p.name}`}
+            onClick={() => setChosen(p.name)}
             className="grid size-[72px] cursor-pointer place-items-center rounded-2xl border border-line text-ink transition hover:border-brand hover:text-brand"
           >
             {p.icon}
           </button>
         ))}
       </div>
+      <p role="status" className="mt-4 min-h-6 text-center text-sm text-brand">
+        {chosen && `${chosen} sign-in isn't available in this demo. Please use email instead.`}
+      </p>
     </div>
   );
 }

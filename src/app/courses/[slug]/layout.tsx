@@ -27,7 +27,7 @@ export default async function CourseLayout({ params, children }: LayoutProps<"/c
 
   return (
     <>
-      <main>
+      <main id="main">
         <CourseHero detail={detail} />
         <Container className={cn("flex flex-col pb-20 lg:pb-[70px]", courseGrid)}>
           <div className="pt-12 lg:pt-[62px]">

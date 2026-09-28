@@ -6,7 +6,7 @@ import { Container } from "@/components/ui/Container";
 export default function NotFound() {
   return (
     <>
-      <main className="bg-grid overflow-hidden pb-24 lg:min-h-[957px]">
+      <main id="main" className="bg-grid overflow-hidden pb-24 lg:min-h-[957px]">
         <Navbar />
         <Container className="relative pt-16 text-center lg:pt-[100px]">
           <p

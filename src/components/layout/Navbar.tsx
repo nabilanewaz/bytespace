@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { CartLink } from "@/components/layout/CartLink";
 import { Container } from "@/components/ui/Container";
 import { Logo } from "@/components/ui/Logo";
 import { mainNav, type NavLink } from "@/data/site";
@@ -20,6 +21,14 @@ export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+
+  // Escape closes the mobile menu.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <header className="relative z-30">
@@ -43,27 +52,36 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-6 text-base text-surface md:flex">
-          <Link href="/login" className="transition hover:text-lime">
+          <Link
+            href="/login"
+            aria-current={pathname === "/login" ? "page" : undefined}
+            className="transition hover:text-lime"
+          >
             Sign In
           </Link>
-          <Link href="/register" className="transition hover:text-lime">
+          <Link
+            href="/register"
+            aria-current={pathname === "/register" ? "page" : undefined}
+            className="transition hover:text-lime"
+          >
             Join Us
           </Link>
-          <Link href="#" aria-label="Cart" className="transition hover:text-lime">
-            <ShoppingBag className="size-6" aria-hidden="true" />
-          </Link>
+          <CartLink />
         </div>
 
-        <button
-          type="button"
-          className="grid size-10 place-items-center rounded-full text-surface hover:bg-white/10 md:hidden"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
-        </button>
+        <div className="flex items-center gap-4 text-surface md:hidden">
+          <CartLink />
+          <button
+            type="button"
+            className="grid size-10 cursor-pointer place-items-center rounded-full hover:bg-white/10"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="size-6" aria-hidden="true" /> : <Menu className="size-6" aria-hidden="true" />}
+          </button>
+        </div>
       </Container>
 
       {open && (

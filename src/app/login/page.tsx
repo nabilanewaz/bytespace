@@ -37,7 +37,7 @@ export default function LoginPage() {
         />
       </AuthForm>
       <SocialLogin />
-      <p className="mt-12 text-center text-lg text-muted">
+      <p className="mt-8 text-center text-lg text-muted">
         New user?{" "}
         <Link href="/register" className="text-brand hover:underline">
           Create an account

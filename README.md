@@ -14,6 +14,10 @@ A responsive implementation of the **ByteSpace** online-course landing page, bui
 | `/courses/[slug]/reviews` | Course details — Reviews tab with rating filter (bonus) |
 | `/creators/[slug]` | Creator profile with filterable, sortable courses (bonus) |
 | `/search`   | Course and creator search with filters, sorting and pagination (bonus) |
+| `/creators` | All creators |
+| `/cart`     | Cart with remove and a demo checkout |
+| `/about`, `/help`, `/contact`, `/affiliate` | Footer pages: about, FAQ, contact form, affiliate program |
+| `/privacy`, `/terms`, `/cookies` | Policies and working cookie preferences |
 | `/login`    | Sign-in page (bonus)                                         |
 | `/register` | Create-account page (bonus)                                  |
 | any other   | Custom 404 page (bonus)                                      |
@@ -61,4 +65,6 @@ src/
 - **Home-page filtering.** The learning-path cards filter the home course grid through a shared client-side context (`CourseFilterContext`), so the page stays statically prerendered. The hero search opens `/search?q=…`.
 - **Search page.** The page filters as you type and keeps the query, category and scope in the URL, so results can be shared and survive a reload (e.g. `/search?q=data&category=Data%20Science`). It shares its filter logic (`src/lib/courseFilters.ts`) and toolbar with the creator profile. The design shows five pages of repeated cards, so six catalog-only courses were added (reusing the design's photos, as the mock-up does) to make search and pagination meaningful. The home page's Featured tab is unchanged. The category chips default to **All**, since the design's default of "Featured" would hide most of the catalog.
 - **Creator profile.** Courses reference their creator by id, so the product count, course grid, course sidebar, and "by …" links all come from one source. The filters are native `<select>` elements styled as pills, which keeps them keyboard- and screen-reader-friendly. The design's placeholder text ("[Creator's Name]", "ive into …") and its "3 Products" count, which contradicts the 6 courses shown, are replaced with real values.
+- **Everything clickable works.** An automated crawl of every page checks that no link is a placeholder and every destination loads. Enroll Now adds to a cart (saved in the browser, with a live badge in the navbar) that has a demo checkout. The footer links lead to real pages, and footer categories open the matching search. Social sign-in, the video play button and all forms give clear feedback, since there is no backend.
+- **Accessibility.** There's a skip-to-content link, a visible focus ring on every control, labelled icon buttons, and Escape closes the mobile menu.
 - **Design quirk.** The footer newsletter button reads "Search" in the Figma file. It is labelled "Subscribe" here to match its purpose.
