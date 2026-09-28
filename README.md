@@ -18,6 +18,7 @@ A responsive implementation of the **ByteSpace** online-course website from the 
 | `/search`   | Course and creator search with filters, sorting and pagination (bonus) |
 | `/creators` | All creators |
 | `/cart`     | Cart with remove and a demo checkout |
+| `/my-courses` | Courses you've checked out (saved in the browser) |
 | `/about`, `/help`, `/contact`, `/affiliate` | Footer pages: about, FAQ, contact form, affiliate program |
 | `/privacy`, `/terms`, `/cookies` | Policies and working cookie preferences |
 | `/login`    | Sign-in page (bonus)                                         |

@@ -14,7 +14,8 @@ const faqs: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Open any course page and click <strong>Enroll Now</strong> to add it to your cart, then go to
-        the <Link href="/cart">cart</Link> and check out.
+        the <Link href="/cart">cart</Link> and check out. Your courses then appear under{" "}
+        <Link href="/my-courses">My Courses</Link>.
       </>
     ),
   },
