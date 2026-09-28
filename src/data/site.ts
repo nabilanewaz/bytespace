@@ -1,14 +1,14 @@
 export type NavLink = {
   label: string;
   href: string;
-  /** URL section this link represents, used to mark it as the current page. */
-  section?: string;
+  /** URL sections this link represents, used to mark it as the current page. */
+  sections?: string[];
 };
 
 export const mainNav: NavLink[] = [
-  { label: "Home", href: "/", section: "/" },
-  { label: "Courses", href: "/#courses", section: "/courses" },
-  { label: "Creators", href: "/#creators", section: "/creators" },
+  { label: "Home", href: "/", sections: ["/"] },
+  { label: "Courses", href: "/search", sections: ["/search", "/courses"] },
+  { label: "Creators", href: "/#creators", sections: ["/creators"] },
 ];
 
 export const footerColumns: NavLink[][] = [
