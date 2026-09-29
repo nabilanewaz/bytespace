@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+
+export const metadata: Metadata = { title: "Page Not Found — ByteSpace" };
 
 export default function NotFound() {
   return (

@@ -71,7 +71,7 @@ export function CategoryStatCard({ className }: FloatingCardProps) {
   return (
     <div className={cn("rounded-2xl bg-white px-4 py-3 shadow-card", className)}>
       <p className="text-base text-ink">UI/UX Design</p>
-      <p className="mt-0.5 flex items-center gap-2 text-xs text-subtle">
+      <p className="mt-0.5 flex items-center gap-2 text-xs text-muted">
         200 Courses <span aria-hidden="true">•</span> 1000+ Students
       </p>
     </div>

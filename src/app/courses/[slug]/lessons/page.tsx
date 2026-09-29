@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { LearningProgressCard } from "@/components/cards/FloatingCards";
 import { ContentSection, Prose } from "@/components/course/ContentSection";
 import { ModuleList } from "@/components/course/ModuleList";
 import { loadCourse } from "@/lib/course";
+
+export async function generateMetadata({ params }: PageProps<"/courses/[slug]/lessons">): Promise<Metadata> {
+  const detail = await loadCourse(params);
+  return { title: `Lessons · ${detail.headline} — ByteSpace` };
+}
 
 export default async function CourseLessonsPage({ params }: PageProps<"/courses/[slug]/lessons">) {
   const detail = await loadCourse(params);
