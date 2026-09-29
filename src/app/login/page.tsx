@@ -87,7 +87,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
           />
           <p className="mt-8 text-center text-lg text-muted">
             New user?{" "}
-            <Link href="/register" className="text-brand hover:underline">
+            <Link href="/register" className="text-brand underline underline-offset-2 hover:decoration-2">
               Create an account
             </Link>
           </p>

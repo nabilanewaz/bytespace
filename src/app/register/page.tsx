@@ -50,7 +50,7 @@ export default function RegisterPage() {
       </AuthForm>
       <p className="mt-16 text-center text-lg text-muted lg:mt-[120px]">
         Already have an account?{" "}
-        <Link href="/login" className="text-brand hover:underline">
+        <Link href="/login" className="text-brand underline underline-offset-2 hover:decoration-2">
           Login
         </Link>
       </p>

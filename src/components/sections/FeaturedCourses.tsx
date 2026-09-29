@@ -43,7 +43,7 @@ export function FeaturedCourses() {
         />
 
         <div
-          role="tablist"
+          role="group"
           aria-label="Course categories"
           className="mx-auto mt-10 flex max-w-[1100px] flex-wrap justify-center gap-x-4 gap-y-5 lg:mt-12"
         >
@@ -51,8 +51,7 @@ export function FeaturedCourses() {
             <button
               key={category}
               type="button"
-              role="tab"
-              aria-selected={activeCategory === category}
+              aria-pressed={activeCategory === category}
               onClick={() => setFilter({ kind: "category", category })}
               className={cn(
                 "h-11 cursor-pointer rounded-full px-4 text-base transition sm:text-lg",
@@ -75,7 +74,7 @@ export function FeaturedCourses() {
           )}
         </div>
 
-        <div role="tabpanel" aria-label={resultsLabel} className="mt-16 lg:mt-[76px]">
+        <div role="region" aria-label={resultsLabel} className="mt-16 lg:mt-[76px]">
           {filter.kind !== "category" && (
             <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-surface px-6 py-4">
               <p className="text-lg text-ink-soft" aria-live="polite">

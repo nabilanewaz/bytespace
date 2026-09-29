@@ -22,9 +22,23 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  // Absolute base for link-preview images; Vercel provides the production domain.
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000",
+  ),
   title: "ByteSpace — Learn, Create & Grow",
   description:
     "Get access to hundreds of courses. Unlock your creativity, gain valuable knowledge, and grow your business with ByteSpace.",
+  // Link previews (WhatsApp, LinkedIn, Slack…). The image is app/opengraph-image.jpg.
+  openGraph: {
+    type: "website",
+    siteName: "ByteSpace",
+    title: "ByteSpace — Learn, Create & Grow",
+    description: "Unlock your creativity, gain valuable knowledge, and grow your business with our wide range of courses.",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

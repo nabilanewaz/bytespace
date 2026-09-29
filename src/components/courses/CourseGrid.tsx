@@ -33,10 +33,14 @@ export function CourseGrid({
   }
 
   return (
-    <div className={cn("grid gap-10 sm:grid-cols-2 lg:grid-cols-3", className)}>
-      {courses.map((course) => (
-        <CourseCard key={course.id} course={course} href={`/courses/${course.id}`} />
-      ))}
-    </div>
+    <>
+      {/* Keeps the heading outline valid (h1 → h2 → the cards' h3) without a visible title. */}
+      <h2 className="sr-only">Courses</h2>
+      <div className={cn("grid gap-10 sm:grid-cols-2 lg:grid-cols-3", className)}>
+        {courses.map((course) => (
+          <CourseCard key={course.id} course={course} href={`/courses/${course.id}`} />
+        ))}
+      </div>
+    </>
   );
 }
